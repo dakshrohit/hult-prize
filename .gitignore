@@ -7,3 +7,5 @@ media
 env
 migrations
 .env
+static/
+staticfiles/

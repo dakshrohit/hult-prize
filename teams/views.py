@@ -279,6 +279,11 @@ def handleSignUp(request):
             except Exception as e:
                 messages.error(request, 'Error occured')
                 return redirect('/')
+            # import traceback
+            #     traceback.print_exc()
+            #     print(f'Signup error: {str(e)}')
+            #     messages.error(request, f'Error occurred: {str(e)}')
+            #     return redirect('/signup')
     else:
         if not is_registration_open():
             messages.warning(request, 'Registration is now closed')
@@ -291,6 +296,9 @@ def handleSignUp(request):
 
 def token(request):
     return render(request, 'token.html')
+
+def error(request):
+    return render(request, '404.html')
 
 def sendMail(email, token):
     subject = 'Verify your account - Hult Prize'
@@ -495,49 +503,61 @@ def joinTeam(request):
                         messages.warning(request, 'You are already in a team so you cannot join other team.')
                     return redirect('/join-team')
     else:
-        if request.user.is_authenticated:
-            teams = Team.objects.exclude(user=request.user)
-            data = []
-            team_from = Team.objects.filter(user=request.user).first()
-            team_timestamp = team_from.can_request_timestamp.date()
-            date_now = datetime.now().date()
-            delta = date_now - team_timestamp
-            if delta.days >= 1:
-                team_from.can_request = True
-                team_from.can_request_timestamp = datetime.now()
-                team_from.save()
-            for team in teams:
-                team_member = TeamMember.objects.filter(team=team).all()
-                request_sent_to = Team.objects.filter(user=request.user).first().request_sent_to
-                can_request = Team.objects.filter(user=request.user).first().can_request
-                if request_sent_to != '':
-                    request_sent_to_team = TeamMember.objects.filter(team=Team.objects.filter(auth_token=request_sent_to).first()).all()
-                    request_sent_to_team_count = 0
-                    for i in request_sent_to_team:
-                        if i.email != '':
-                            request_sent_to_team_count += 1
-                    if request_sent_to_team_count == 3:
-                        can_request = True
-                        team_from.can_request = True
-                        team_from.can_request_timestamp = datetime.now()
-                        team_from.request_sent_to = ''
-                        team_from.save()
-                if team_member.count() != 0:
-                    no_of_members = 0
-                    for tm in team_member:
-                        if tm.email != '':
-                            no_of_members += 1
-                    data.append({
-                        'team_name':team.team_name,
-                        'leader': team.user.first_name + " " + team.user.last_name,
-                        'auth_token': team.auth_token,
-                        'team_member': team_member,
-                        'is_leader': Team.objects.filter(user=request.user).first().is_leader,
-                        'can_request': can_request,
-                        'no_of_members': no_of_members
-                    })
-            return render(request, 'join-team.html', { 'data': data })
-        else:
+        try:
+            if request.user.is_authenticated:
+                teams = Team.objects.exclude(user=request.user).exclude(team_name='')
+                data = []
+                team_from = Team.objects.filter(user=request.user).first()
+                
+                if not team_from:
+                    messages.error(request, 'No team found for your account. Please contact support.')
+                    return redirect('/')
+                
+                team_timestamp = team_from.can_request_timestamp.date()
+                date_now = datetime.now().date()
+                delta = date_now - team_timestamp
+                if delta.days >= 1:
+                    team_from.can_request = True
+                    team_from.can_request_timestamp = datetime.now()
+                    team_from.save()
+                    
+                for team in teams:
+                    team_member = TeamMember.objects.filter(team=team).all()
+                    request_sent_to = team_from.request_sent_to
+                    can_request = team_from.can_request
+                    if request_sent_to != '':
+                        request_sent_to_team_obj = Team.objects.filter(auth_token=request_sent_to).first()
+                        if request_sent_to_team_obj:
+                            request_sent_to_team = TeamMember.objects.filter(team=request_sent_to_team_obj).all()
+                            request_sent_to_team_count = 0
+                            for i in request_sent_to_team:
+                                if i.email != '':
+                                    request_sent_to_team_count += 1
+                            if request_sent_to_team_count == 3:
+                                can_request = True
+                                team_from.can_request = True
+                                team_from.can_request_timestamp = datetime.now()
+                                team_from.request_sent_to = ''
+                                team_from.save()
+                    if team_member.count() != 0:
+                        no_of_members = 0
+                        for tm in team_member:
+                            if tm.email != '':
+                                no_of_members += 1
+                        data.append({
+                            'team_name':team.team_name,
+                            'leader': team.user.first_name + " " + team.user.last_name,
+                            'auth_token': team.auth_token,
+                            'team_member': team_member,
+                            'is_leader': team_from.is_leader,
+                            'can_request': can_request,
+                            'no_of_members': no_of_members
+                        })
+                return render(request, 'join-team.html', { 'data': data })
+            else:
+                return redirect('/')
+        except Exception as e:
+            messages.error(request, 'An error occurred. Please try again.')
             return redirect('/')
 
 def myTeam(request):

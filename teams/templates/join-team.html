@@ -93,13 +93,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
   ></dotlottie-player>
 </div>
 
-{% comment %} Registration closed {% endcomment %} {% with
-registration_closed="true" %} {% comment %} {% endcomment %}
 <div class="container">
   <div class="button createBtn">
-    {% comment %} Registration closed {% endcomment %}
-    <a href="/create-team" title="Registration is now closed"> Create Team </a>
-    {% comment %} {% endcomment %}
+    <a href="/create-team"> Create Team </a>
     <a href="/my-team"> My Team </a>
   </div>
 
@@ -151,9 +147,8 @@ registration_closed="true" %} {% comment %} {% endcomment %}
         <div class="badge badge-leader">
           <p>{{team.team_name}}</p>
         </div>
-        {% comment %} Registration closed {% endcomment %} {% if
-        registration_closed == "true" %} {% comment %} {% endcomment %} {% elif
-        team.no_of_members == 3 %} {% comment %}
+
+        {% if team.no_of_members == 3 %}
         <form action="/join-team" method="POST" class="button">
           {% csrf_token %}
           <input value="{{ team.auth_token }}" name="auth_token" hidden />
@@ -165,8 +160,7 @@ registration_closed="true" %} {% comment %} {% endcomment %}
             Join Team
           </button>
         </form>
-        {% endcomment %} {% elif team.is_leader != True and team.can_request ==
-        True %}
+        {% elif team.is_leader != True and team.can_request == True %}
         <form action="/join-team" method="POST" class="button">
           {% csrf_token %}
           <input value="{{ team.auth_token }}" name="auth_token" hidden />
@@ -212,8 +206,8 @@ registration_closed="true" %} {% comment %} {% endcomment %}
   </div>
   {% endif %}
 </div>
-{% comment %} Registration closed {% endcomment %} {% endwith %} {% comment %}
-{% endcomment %} {% endblock body %} {% block script %}
+
+{% endblock body %} {% block script %}
 <script
   src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
   integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
