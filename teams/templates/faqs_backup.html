@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- {% block title %}Hult Prize - FAQs{% endblock title %} -->
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/faqs.css' %}" />
+<style>
+   #preloader{
+  background: white no-repeat center center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-size: 10%;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+}
+  .container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width:968px) {
+    .rightNavBar{
+      display: none;
+    }
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  @media screen and (max-width:968px) {
+    .rightNavBar{
+      display: none;
+    }
+  }
+</style>
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+  crossorigin="anonymous"
+/>
+<!-- favicons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<link rel="stylesheet" href="{%static 'css/home.css'%}" />
+<link rel="stylesheet" href="{%static 'css/faqs.css'%}" />
+{% endblock css %} 
+{% block body %}
+<!-- preloader -->
+<div id="preloader"><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <dotlottie-player src="https://lottie.host/f8eea060-94a4-49c4-ba26-afcaf9db89ef/QE00QfxVj6.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player></div>
+
+<section>
+
+<div class="container">
+  <h3>FAQs</h3>
+  {% for faq in faqs %}
+  <div>
+    <p>{{ faq.question }}</p>
+    <p>{{ faq.answer }}</p>
+  </div>
+  {% endfor %}
+</div>
+
+</section>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+  crossorigin="anonymous"
+></script>
+<!-- <script src="../JavaScript/index.js"></script> -->
+{% endblock body %}

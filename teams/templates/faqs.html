@@ -1,78 +1,460 @@
-{% extends 'base.html' %}
-{% load static %}
-<!-- {% block title %}Hult Prize - FAQs{% endblock title %} -->
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/faqs.css' %}" />
+{% extends 'base.html' %} {% load static %} {% block title %}Hult Prize - How to
+Register & Timeline{% endblock title %} {% block css %}
 <style>
-   #preloader{
-  background: white no-repeat center center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  background-size: 10%;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-}
-  .container{
+  #preloader {
+    background: white no-repeat center center;
+    align-items: center;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
   }
-  @media screen and (max-width:968px) {
-    .rightNavBar{
-      display: none;
+
+  body {
+    background-color: var(--gray-bg);
+  }
+
+  .page-header {
+    background: linear-gradient(
+      135deg,
+      var(--gradient-start) 0%,
+      var(--gradient-end) 100%
+    );
+    padding: 140px 2rem 80px;
+    text-align: center;
+    color: var(--white);
+  }
+
+  .page-header h1 {
+    font-size: 56px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .page-header p {
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .content-wrapper {
+    max-width: 1200px;
+    margin: -40px auto 80px;
+    padding: 0 2rem;
+  }
+
+  .section-card {
+    background-color: var(--white);
+    border-radius: 24px;
+    padding: 60px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .section-card h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .registration-steps {
+    display: grid;
+    gap: 30px;
+  }
+
+  .step-item {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 24px;
+    background-color: var(--gray-bg);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .step-item:hover {
+    transform: translateX(10px);
+    box-shadow: 0 4px 12px rgba(236, 0, 140, 0.2);
+  }
+
+  .step-number {
+    min-width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .step-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 8px;
+  }
+
+  .step-content p {
+    font-size: 16px;
+    color: var(--gray-text);
+    line-height: 1.6;
+  }
+
+  .timeline-grid {
+    display: grid;
+    gap: 24px;
+  }
+
+  .timeline-card {
+    background: linear-gradient(135deg, var(--purple) 0%, #2a1dd8 100%);
+    border-radius: 16px;
+    padding: 32px;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .timeline-card:hover::before {
+    opacity: 1;
+  }
+
+  .timeline-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(42, 29, 216, 0.3);
+  }
+
+  .timeline-date {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--pink);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .timeline-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .timeline-description {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+  }
+
+  .timeline-link {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 24px;
+    background-color: var(--white);
+    color: var(--purple);
+    text-decoration: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .timeline-link:hover {
+    background-color: var(--pink);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  .info-box {
+    background-color: #fff3f8;
+    border-left: 4px solid var(--pink);
+    padding: 24px;
+    border-radius: 12px;
+    margin-top: 32px;
+  }
+
+  .info-box h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 12px;
+  }
+
+  .info-box p {
+    font-size: 16px;
+    color: var(--gray-text);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 968px) {
+    .page-header h1 {
+      font-size: 40px;
+    }
+
+    .section-card {
+      padding: 40px 30px;
+    }
+
+    .section-card h2 {
+      font-size: 28px;
+    }
+
+    .step-item {
+      flex-direction: column;
     }
   }
-  .container{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-  @media screen and (max-width:968px) {
-    .rightNavBar{
-      display: none;
+
+  @media (max-width: 600px) {
+    .page-header {
+      padding: 120px 1.5rem 60px;
+    }
+
+    .page-header h1 {
+      font-size: 32px;
+    }
+
+    .section-card {
+      padding: 30px 20px;
     }
   }
 </style>
-<link
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-  crossorigin="anonymous"
-/>
-<!-- favicons -->
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/>
-<link rel="stylesheet" href="{%static 'css/home.css'%}" />
-<link rel="stylesheet" href="{%static 'css/faqs.css'%}" />
-{% endblock css %} 
-{% block body %}
+{% endblock css %} {% block body %}
 <!-- preloader -->
-<div id="preloader"><script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-  <dotlottie-player src="https://lottie.host/f8eea060-94a4-49c4-ba26-afcaf9db89ef/QE00QfxVj6.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player></div>
-
-<section>
-
-<div class="container">
-  <h3>FAQs</h3>
-  {% for faq in faqs %}
-  <div>
-    <p>{{ faq.question }}</p>
-    <p>{{ faq.answer }}</p>
-  </div>
-  {% endfor %}
+<div id="preloader">
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+  <dotlottie-player
+    src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    loop
+    autoplay
+  ></dotlottie-player>
 </div>
 
+<!-- Page Header -->
+<section class="page-header">
+  <h1>How to Register & Timeline</h1>
+  <p>Everything you need to know to participate in Hult Prize NIT Durgapur</p>
 </section>
 
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-  crossorigin="anonymous"
-></script>
-<!-- <script src="../JavaScript/index.js"></script> -->
-{% endblock body %}
+<!-- Content -->
+<div class="content-wrapper">
+  <!-- How to Register Section -->
+  <div class="section-card">
+    <h2>How to Register?</h2>
+
+    <div class="registration-steps">
+      <div class="step-item">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Form Your Team</h3>
+          <p>
+            Gather a team of 3-4 passionate members who share your vision for
+            social entrepreneurship. Diversity in skills and perspectives
+            strengthens your team.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Team Leader Signs Up</h3>
+          <p>
+            The team leader creates an account on our platform and registers the
+            team with all member details. You'll receive a verification email to
+            confirm your registration.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Team Members Accept Invitation</h3>
+          <p>
+            All team members will receive an invitation email. They must accept
+            the invitation to be officially added to the team roster.
+          </p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Or Join an Existing Team</h3>
+          <p>
+            Don't have a complete team? No problem! Register individually and
+            send requests to join other teams. You can send one request every 24
+            hours.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>📋 Team Requirements</h4>
+      <p>
+        Each team must have a minimum of 3 members and maximum of 4 members. All
+        team members must be current students at NIT Durgapur.
+      </p>
+    </div>
+  </div>
+
+  <!-- Timeline Section -->
+  <div class="section-card">
+    <h2>Competition Timeline</h2>
+
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <div class="timeline-date">November 1-3, 2024</div>
+        <h3 class="timeline-title">Pre-Hult Event</h3>
+        <p class="timeline-description">
+          Join us for an introductory event to learn about the Hult Prize 2025,
+          meet past winners, and understand what it takes to succeed in the
+          competition.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-date">December 6, 2024</div>
+        <h3 class="timeline-title">On Campus Orientation</h3>
+        <p class="timeline-description">
+          Mandatory orientation session for all registered teams. Learn about
+          the competition format, judging criteria, and get your questions
+          answered.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-date">December 10-11, 2024</div>
+        <h3 class="timeline-title">Speaker Sessions</h3>
+        <p class="timeline-description">
+          Gain insights from industry experts and successful entrepreneurs who
+          will share their experiences and knowledge about building impactful
+          startups.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-date">December 14-16, 2024</div>
+        <h3 class="timeline-title">Mentor Sessions</h3>
+        <p class="timeline-description">
+          Get personalized guidance from experienced mentors to refine your
+          business idea, pitch, and presentation strategy.
+        </p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-date">December 19, 2024 - Deadline</div>
+        <h3 class="timeline-title">Registrations Close</h3>
+        <p class="timeline-description">
+          Final date to register your team for the competition. Make sure all
+          team details are submitted and verified before the deadline.
+        </p>
+        <a href="/signup" class="timeline-link"
+          >Register Now <i class="fa-solid fa-arrow-right"></i
+        ></a>
+      </div>
+
+      <div class="timeline-card">
+        <div class="timeline-date">December 20-22, 2024</div>
+        <h3 class="timeline-title">On Campus Round</h3>
+        <p class="timeline-description">
+          The main event! Pitch your innovative idea to a panel of distinguished
+          judges. Winners will advance to represent NIT Durgapur at Regional
+          Finals.
+        </p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>🏆 What Happens Next?</h4>
+      <p>
+        Winning teams from the on-campus round will advance to compete at the
+        Regional Finals, held in one of six countries worldwide. Regional
+        winners then proceed to the Global Finals for a chance to win the $1
+        million prize!
+      </p>
+    </div>
+  </div>
+
+  <!-- FAQs Section -->
+  {% if faqs %}
+  <div class="section-card">
+    <h2>Frequently Asked Questions</h2>
+    <div style="margin-top: 24px">
+      {% for faq in faqs %}
+      <details
+        style="
+          margin-bottom: 16px;
+          border-bottom: 1px solid var(--gray-bg);
+          padding-bottom: 16px;
+        "
+      >
+        <summary
+          style="
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--purple);
+            cursor: pointer;
+            padding: 12px 0;
+          "
+        >
+          {{ faq.question }}
+        </summary>
+        <p
+          style="
+            font-size: 16px;
+            color: var(--gray-text);
+            line-height: 1.6;
+            margin-top: 12px;
+            padding-left: 20px;
+          "
+        >
+          {{ faq.answer }}
+        </p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock body %} {% block script %}
+<script>
+  // Preloader
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      document.getElementById("preloader").style.display = "none";
+    }, 1500);
+  });
+</script>
+{% endblock script %}

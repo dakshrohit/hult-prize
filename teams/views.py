@@ -12,7 +12,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
-from django.utils.encoding import force_bytes, force_text
+from django.utils.encoding import force_bytes, force_str
 from django.shortcuts import HttpResponse, redirect, render
 from .models import *
 from datetime import datetime
@@ -215,18 +215,19 @@ def handleLogin(request):
             messages.error(request, 'Wrong password or username')
             return redirect('/login')
         login(request, user)
-        if Team.objects.filter(user=request.user).first().is_leader == False:
+        team = Team.objects.filter(user=request.user).first()
+        if team and team.is_leader == False:
             return redirect('/join-team')
         else:
             return redirect('/create-team')
     else:
         if request.user.is_authenticated:
-            if Team.objects.filter(user=request.user).first().is_leader == False:
+            team = Team.objects.filter(user=request.user).first()
+            if team and team.is_leader == False:
                 return redirect('/join-team')
-            else:
+            elif team:
                 return redirect('/create-team')
-        else:
-            return render(request, 'login.html')
+        return render(request, 'login.html')
 
 def handleLogout(request):
     if request.method == 'POST':
@@ -639,7 +640,7 @@ def resettoken(request):
 
 def reset_password_confirm(request, uidb64, token):
     try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
+        uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None

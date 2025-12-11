@@ -1,555 +1,838 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Hult Prize{% endblock title %}
+{% block title %}Hult Prize NIT Durgapur{% endblock title %}
 {% block css %}
 <style>
+  /* Preloader */
   #preloader {
-    background: white no-repeat center center;
+    background: white;
+    display: flex;
     align-items: center;
     justify-content: center;
-    display: flex;
-    background-size: 10%;
-    z-index: 100;
-    height: 100vh;
-    width: 100vw;
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+  }
+  
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Hero Section with Gradient Banner */
+  .hero-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .gradient-banner {
+    background: linear-gradient(90deg, #2A1DD8 0%, #CE038C 100%);
+    padding: 12px 0;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .gradient-banner a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .gradient-banner a:hover {
+    text-decoration: underline;
+  }
+  
+  .hero-section {
+    background: #000000;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 2rem 80px;
+    position: relative;
+  }
+  
+  .hero-bg-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+  }
+  
+  .shape {
+    position: absolute;
+    opacity: 0.6;
+  }
+  
+  .shape-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(236, 0, 140, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -200px;
+    left: -200px;
+    animation: float 20s ease-in-out infinite;
+  }
+  
+  .shape-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(42, 29, 216, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -150px;
+    right: -150px;
+    animation: float 15s ease-in-out infinite reverse;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(50px, 50px) scale(1.1);
+    }
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .hero-logo {
+    width: 500px;
+    height: auto;
+    margin-bottom: 40px;
+    animation: fadeIn 1.5s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .hero-title {
+    font-size: 72px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: -2px;
+  }
+  
+  .hero-subtitle {
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 48px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  
+  .hero-cta {
+    display: inline-block;
+    padding: 18px 48px;
+    background-color: var(--white);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(255,255,255,0.2);
+  }
+  
+  .hero-cta:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 36px rgba(255,255,255,0.3);
+    color: var(--black);
+  }
+  
+  /* Stats Section */
+  .stats-section {
+    background-color: var(--pink);
+    padding: 100px 2rem;
+    position: relative;
+  }
+  
+  .stats-section::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: var(--pink);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+  
+  .stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  
+  .stat-card {
+    background-color: var(--white);
+    padding: 48px 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  }
+  
+  .stat-number {
+    font-size: 56px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+  
+  .stat-label {
+    font-size: 16px;
+    color: var(--gray-text);
+    font-weight: 600;
+  }
+  
+  /* Content Sections */
+  .content-section {
+    padding: 120px 2rem;
+    position: relative;
+  }
+  
+  .content-section.white-bg {
+    background-color: var(--white);
+  }
+  
+  .content-section.gray-bg {
+    background-color: var(--gray-bg);
+  }
+  
+  .content-section.purple-bg {
+    background-color: var(--purple);
+    color: var(--white);
+  }
+  
+  .content-section.green-bg {
+    background-color: var(--green);
+    color: var(--white);
+  }
+    .content-section.skyblue-bg {
+    background-color: var(--skyblue);
+    color: var(--white);
+  }
+     .content-section.pink-bg {
+    background-color: var(--pink);
+    color: var(--white);
+    
+  }
+     .content-section.darkgreen-bg {
+    background-color: var(--darkgreen);
+    color: var(--white);
+    
+  }
+  .whatishult-container{
+     max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
 
   }
+    .whatishult-text h2 {
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  .whatishult-text p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--gray-text);
+    margin-bottom: 20px;
+  }
+    
+  
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  
+  .section-container.reverse {
+    direction: rtl;
+  }
+  
+  .section-container.reverse > * {
+    direction: ltr;
+  }
+  
+  .section-text h2 {
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+  
+  .purple-bg .section-text h2,
+  .green-bg .section-text h2 {
+    color: var(--white);
+  }
+  .darkgreen-bg .section-text h2 {
+    color: var(--white);
+  }
+  .pink-bg .section-text h2 {
+    color: var(--white);
+  }
+  
+  
+  .section-text p {
+    font-size: 19px;
+    line-height: 1.7;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  
+  .purple-bg .section-text p,
+  .green-bg .section-text p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .section-text ul {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0;
+  }
+  
+  .section-text ul li {
+    padding: 16px 0;
+    font-size: 18px;
+    line-height: 1.6;
+    position: relative;
+    padding-left: 36px;
+  }
+  
+  .section-text ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--pink);
+    font-weight: 800;
+    font-size: 22px;
+  }
+  
+  .purple-bg .section-text ul li::before,
+  .green-bg .section-text ul li::before {
+    color: var(--white);
+  }
+  
+  .section-image {
+    text-align: center;
+  }
+  
+  .section-image img {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+  }
+  
+  .section-image img:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Flow Timeline */
+  .flow-timeline {
+    padding: 120px 2rem;
+    background-color: var(--purple);
+    color: var(--white);
+    position: relative;
+  }
+  
+  .flow-timeline::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: var(--purple);
+    clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+  }
+  
+  .flow-timeline h2 {
+    text-align: center;
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 80px;
+  }
+  
+  .timeline-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .timeline-item {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: flex-start;
+    opacity: 0;
+    animation: slideIn 0.6s ease-out forwards;
+  }
+  
+  .timeline-item:nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  
+  .timeline-item:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  
+  .timeline-item:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  
+  .timeline-item:nth-child(4) {
+    animation-delay: 0.8s;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .timeline-number {
+    min-width: 70px;
+    height: 70px;
+    background-color: var(--pink);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(236, 0, 140, 0.4);
+  }
+  
+  .timeline-content {
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 36px;
+    border-radius: 16px;
+    flex: 1;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .timeline-content:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(10px);
+  }
+  
+  .timeline-content h3 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  
+  .timeline-content p {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    background: linear-gradient(135deg, #2A1DD8 0%, #CE038C 100%);
+    padding: 100px 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 Q300,80 600,40 T1200,0 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.03)"/></svg>') repeat-x;
+    opacity: 0.5;
+  }
+  
+  .cta-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .cta-content h2 {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 28px;
+  }
+  
+  .cta-content p {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 48px;
+    line-height: 1.5;
+  }
+  
+  .cta-buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 48px;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .cta-btn.primary {
+    background-color: var(--white);
+    color: var(--purple);
+  }
+  
+  .cta-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(255,255,255,0.3);
+    color: var(--purple);
+  }
+  
+  .cta-btn.secondary {
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
+  }
+  
+  .cta-btn.secondary:hover {
+    background-color: var(--white);
+    color: var(--purple);
+    transform: translateY(-3px);
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .stats-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 968px) {
+    .hero-title {
+      font-size: 48px;
+    }
+    
+    .hero-subtitle {
+      font-size: 22px;
+    }
+    
+    .section-container {
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+    
+    .section-container.reverse {
+      direction: ltr;
+    }
+    
+    .section-text h2,
+    .flow-timeline h2,
+    .cta-content h2 {
+      font-size: 40px;
+    }
+    
+    .timeline-item {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .hero-title {
+      font-size: 36px;
+    }
+    
+    .hero-subtitle {
+      font-size: 18px;
+    }
+    
+    .section-text h2,
+    .flow-timeline h2,
+    .cta-content h2 {
+      font-size: 32px;
+    }
+    
+    .stats-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .stat-number {
+      font-size: 42px;
+    }
+    
+    .content-section {
+      padding: 80px 1.5rem;
+    }
+  }
 </style>
-<!-- icons -->
-<!-- <link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-/> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
-<!-- swiper css -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
-<link rel="stylesheet" href="{% static 'css/home.css' %}" />
 {% endblock css %}
 
 {% block body %}
+<!-- Messages -->
 {% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">
-  <strong>Message : </strong> &nbsp;{{ message }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x"
-      viewBox="0 0 16 16">
-      <path
-        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-    </svg>
-  </button>
+<div class="alert alert-{{ message.tags }}" role="alert" style="position: fixed; top: 80px; right: 20px; z-index: 1000; background-color: var(--pink); color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); max-width: 400px;">
+  <strong>Message: </strong> &nbsp;{{ message }}
+  <button type="button" class="btn-close" onclick="this.parentElement.style.display='none'" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer; margin-left: 10px;">×</button>
 </div>
 {% endfor %}
 
-<!-- preloader -->
+<!-- Preloader -->
 <div id="preloader">
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-
   <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
     background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
 </div>
 
-<div class="extraMargin"></div>
+<div class="hero-wrapper">
+  <!-- Gradient Banner -->
+  <div class="gradient-banner">
+    <a href="/faqs">Meet Stick 'Em, our 2025 Hult Prize winners →</a>
+  </div>
+  
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+    </div>
+    
+    <div class="hero-content">
+      <img src="{% static 'assets/hultPrizeLogoNew.png' %}" alt="Hult Prize Logo" class="hero-logo" />
+      <h1 class="hero-title">One million to change the world</h1>
+      <p class="hero-subtitle">Join the world's largest student startup competition</p>
+      <a href="/signup" class="hero-cta">Register to Compete</a>
+    </div>
+  </section>
+</div>
 
-<!-- content -->
-<section>
-  <div class="container container-first container-odd">
-    <div class="textContent fade-in">
-      <h1 class="heading">What is the Hult Prize?</h1>
-      <p class="content">
-        The Hult Prize Foundation transforms how young people envision their own possibillities
-        as leaders of change in the world around them. With a US$ 1,000,000 global statup prize
-        as its anchor activity, the Hult Prize has brought Impact-focused programs, events and
-        trainings to over a million students globally, creating a pathway for youth everywhere to
-        take action to build a better world.
-      </p>
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-number">130+</div>
+      <div class="stat-label">Participating Countries</div>
     </div>
-    <div class="imageContent fade-in">
-      <img src="{% static 'assets/pic1.png' %}" />
+    <div class="stat-card">
+      <div class="stat-number">50K+</div>
+      <div class="stat-label">Entrepreneurs</div>
     </div>
-  </div>
-  <div class="container container-even">
-    <div class="imageContent fade-in">
-      <img src="{% static 'assets/teamwork.webp' %}" />
+    <div class="stat-card">
+      <div class="stat-number">200K+</div>
+      <div class="stat-label">Annual Participants</div>
     </div>
-    <div class="textContent fade-in">
-      <h1 class="heading">
-        Why you should participate?
-      </h1>
-      <p class="content">
-        <strong>1. </strong>Certificates for all participants signed by former US President Bill Clinton and Ahmad
-        Ashkar, CEO of Hult Foundation.
-        <br>
-        <strong>2. </strong>Mentorship and incubation opportunities from a renowned paned of investors and industry
-        experts.
-        <br>
-        <strong>3. </strong>A chance to represent our college in the prestigious Hult Regional Finals held in one of six
-        coutries around the globel.
-        <br>
-        <strong>4. </strong>Finally, a chance to enjoy an unparalleled learning experience, while solving some of the
-        greatest challenges that plague humanity.
-      </p>
-    </div>
-  </div>
-  <div class="container container-odd">
-
-    <div class="textContent fade-in">
-      <h1 class="heading">
-        This Year's Theme
-      </h1>
-      <p class="content">
-        The Hult Prize organization has officially announced this year's problem statement: <br>"An idea with a global
-        impact and alignment with at least one Sustainable Development Goal."
-        <br>
-        This year, you can pitch any idea you have for a social enterprise, as long as it is world-changing and aligned
-        with at least one of the United Nations Sustainable Development Goals (SDGs).
-        <br>
-        The clock is ticking, so pull your socks up and start working on your B-plan.
-        <br>
-      </p>
-      <!-- <a href=https://a.storyblok.com/f/133195/x/9b00d13b31/hult-prize-2024-challenge-unlimited.pdf target="_blank">
-         Download the Challenge Pdf <i class="fa fa-file-pdf-o"></i> </a> -->
-    </div>
-    <div class="imageContent fade-in">
-      <img src="{% static 'assets/challenge.webp' %}" />
-    </div>
-  </div>
-  <div class="container container-last container-even">
-    <div class="imageContent fade-in">
-      <img src="{% static 'assets/0x0.webp' %}" alt="" />
-    </div>
-    <div class="textContent fade-in">
-      <h1 class="heading">How to Register?</h1>
-      <p class="content">
-        To participate you must have at least 3 and maximum of 4 members in your team. <br><br>
-        If you have decided all the members of your team, then the team leader can register (sign up) and then fill the
-        details of all the other members. Other members will receive the request and can accept, following which they
-        can be added to the team. In case they reject, team leader still has the option to add other members to his/her
-        team.<br><br>
-        If you cannot find other team members but wish to participate, then you can register and choose to join other
-        teams by sending them a request. Once your request is accepted, you will be added to that team. Please note that
-        you can only send a request once in 24 hours.
-      </p>
+    <div class="stat-card">
+      <div class="stat-number">$1M</div>
+      <div class="stat-label">Annual Prize Funding</div>
     </div>
   </div>
 </section>
 
-<!-- timeline -->
-
-<main>
-  <h2 class="title">Timeline</h2>
-
-  <!-- 1 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">PRE HULT 1-3 NOVEMBER 2024</h3>
-    <p class="content-timeline">
-      There will be a Pre-Hult event to introduce you to the Hult Prize 2025.
-    </p>
-
+<!-- What is Hult Prize -->
+<section class="content-section white-bg">
+  <div class="whatishult-container">
+    <div class="whatishult-text">
+      <h2>What is the Hult Prize?</h2>
+      <p>
+        The Hult Prize Foundation transforms how young people envision their own possibilities
+        as leaders of change in the world around them.
+      </p>
+      <p>
+        With a US$ 1,000,000 global startup prize as its anchor activity, the Hult Prize has brought 
+        impact-focused programs, events and trainings to over a million students globally, creating a 
+        pathway for youth everywhere to take action to build a better world.
+      </p>
+    </div>
+    <div class="section-image">
+      <img src="{% static 'assets/pic1.png' %}" alt="Hult Prize" />
+    </div>
   </div>
-  <!-- 2 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">REGISTRATIONS CLOSE - 19 DECEMBER 2024</h3>
-    <p class="content-timeline">
-      Registrations opened for the application of Hult Prize
-      <br>
-      <a href="/signup" class="timelineLink"> Click here to Register <i class="fa-solid fa-pen-to-square"></i> </a>
+</section>
 
-
+<!-- Why Participate -->
+<section class="content-section skyblue-bg">
+  <div class="section-container reverse">
+    <div class="section-text">
+      <h2>Why you should participate?</h2>
+      <ul>
+        <li>Certificates for all participants signed by former US President Bill Clinton and Ahmad Ashkar, CEO of Hult Foundation</li>
+        <li>Mentorship and incubation opportunities from a renowned panel of investors and industry experts</li>
+        <li>A chance to represent our college in the prestigious Hult Regional Finals held in one of six countries around the globe</li>
+        <li>An unparalleled learning experience, while solving some of the greatest challenges that plague humanity</li>
+      </ul>
+    </div>
+    <div class="section-image">
+      <img src="{% static 'assets/teamwork.webp' %}" alt="Teamwork" />
+    </div>
   </div>
-  <!-- 3 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">ON CAMPUS ORIENTATION - 6 December 2024 </h3>
-    <p class="content-timeline">
-      There will be an oncampus orientation on 6th December.
-      <br>
-    </p>
+</section>
+
+<!-- This Year's Theme -->
+<section class="content-section pink-bg">
+  <div class="section-container">
+    <div class="section-text" >
+      <h2>This Year's Theme</h2>
+      <p>
+        The Hult Prize organization has officially announced this year's problem statement: 
+        <strong>"An idea with a global impact and alignment with at least one Sustainable Development Goal."</strong>
+      </p>
+      <p>
+        This year, you can pitch any idea you have for a social enterprise, as long as it is world-changing 
+        and aligned with at least one of the United Nations Sustainable Development Goals (SDGs).
+      </p>
+      <p>
+        The clock is ticking, so pull your socks up and start working on your B-plan.
+      </p>
+    </div>
+    <div class="section-image">
+      <img src="{% static 'assets/challenge.webp' %}" alt="Challenge" />
+    </div>
   </div>
-  <!-- 4 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">SPEAKER SESSION - 10th, 11th DECEMBER 2024</h3>
-    <p class="content-timeline">
-      There will be a speaker session with 3 mentors on 10th, 11th December.
-      <br>
-    </p>
+</section>
+
+<!-- Flow of Competition -->
+<section class="flow-timeline">
+  <h2>Flow of the Competition</h2>
+  <div class="timeline-container">
+    <div class="timeline-item">
+      <div class="timeline-number">1</div>
+      <div class="timeline-content">
+        <h3>College Qualifiers</h3>
+        <p>Register your team and compete in the on-campus round at NIT Durgapur. Winners advance to regional competition.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">2</div>
+      <div class="timeline-content">
+        <h3>Regional Finals</h3>
+        <p>Compete against teams from universities across your region for a chance to represent at the global level.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">3</div>
+      <div class="timeline-content">
+        <h3>Global Accelerator</h3>
+        <p>Receive intensive mentorship and training from industry experts to refine your startup idea.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-number">4</div>
+      <div class="timeline-content">
+        <h3>Global Finals</h3>
+        <p>Pitch your idea on the world stage for a chance to win the $1 million prize and change the world.</p>
+      </div>
+    </div>
   </div>
-  <!-- 5 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">MENTOR SESSION - 14th, 15th, 16th DECEMBER 2024</h3>
-    <p class="content-timeline">
-      There will be a mentor session with 3 mentors on 14th, 15th, 16th December.
-      <br>
-    </p>
+</section>
+
+<!-- CTA Section -->
+<section class="content-section green-bg">
+  <div class="cta-content">
+    <h2>Ready to make an impact?</h2>
+    <p>Join hundreds of students from NIT Durgapur in the world's largest social entrepreneurship competition</p>
+    <div class="cta-buttons">
+      <a href="/signup" class="cta-btn primary">Register Now</a>
+      <a href="/faqs" class="cta-btn secondary">Learn More</a>
+    </div>
   </div>
-  <!-- 6 -->
-  <div class="timeline">
-    <h3 class="heading-timeline">ON CAMPUS ROUND 2025 - 20th, 21st, 22nd DECEMBER 2024 </h3>
-    <p class="content-timeline">
-      The much awaited On Campus Round will be held on 20th, 21st, 22nd December.
-      <br>
-    </p>
-  </div>
-
-</main>
-
-<!-- Swiper -->
-<div class="swiper mySwiper fade-in" id="swiper">
-  <div class="swiper-wrapper">
-
-    <!-- slide 10 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-
-        <a href="https://www.instagram.com/p/C1d9MXaNzun/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/terranova.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>Winners</h3>
-          <h2>2024</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team "TerraNova" as the winning team of
-          HULT Prize '24 , OnCampus Round, NIT Durgapur. The team comprised of 1st-year
-          students, namely Md. Saad Rahman, Aniruddh Shahal, Ayush Gupta and Md. Huzaifah Alam.
-          Their idea revolves around the health and sustainability, cultivating premium spirulina.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 11 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/C1d8XWXtEqS/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Erneult.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2024</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team " Erneult " as the joint runner up of HULT
-          Prize '24, OnCampus Round, NIT Durgapur. The team comprised of 1st-year students,
-          namely Sutapa Naskar, Ridhi Kumari, and Prity Kumari. Their idea revolves around
-          innovative concept of compacting plastic bottles with wrappers and molding them
-          with natural gypsum.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 12 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/C1d7WCwtld6/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/biopen.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2024</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team " Biopen " as the joint runner up of HULT
-          Prize '24, OnCampus Round, NIT Durgapur. The team comprised of 1st-year students,
-          namely Shagupta Paul, Satyake Sadhukhan, and Rajshekhar Das. Their idea revolves around
-          making our planet better by making pen for its true usage, by using eco-friendly biopens.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 13 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/C1d5onRNYCu/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Achievers.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>Special Mention</h3>
-          <h2>2024</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team " Achievers " as the special mention team of HULT
-          Prize '24, OnCampus Round, NIT Durgapur. The team comprised of 1st-year students,
-          namely Pratik Shaw, Vedanga Bhardwaj, and Triparno Chakraborty. Their idea revolves around
-          building an efficient and stable user interface which would provide users with smooth
-          and efficient bus journeys.
-        </p>
-
-      </div>
-    </div>
-
-
-
-
-    <!-- slide 7 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Cm80b_CvzKB/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/NeoDynamo.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>Winners</h3>
-          <h2>2023</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team "Neo Dynamo" as the winning team of
-          HULT Prize '23 , OnCampus Round, NIT Durgapur. The team comprised of 1st-year
-          students, namely Arkarup Mitra, Kushagra Lal, Apratim Das and Souryadipta Khan.
-          Their idea involves the use of stable diffusion AI to provide custom fashion
-          designs for a fee.
-        </p>
-
-      </div>
-    </div>
-
-
-    <!-- slide 8 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Cm8zwCfPNbP/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Dumbledore.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2023</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team " Dumbledore " as the joint runner up of HULT
-          Prize '23, OnCampus Round, NIT Durgapur. The team comprised of 1st-year students,
-          namely Argha Deep Metya, Debojit Low, Asish Ghosh and Kousik Pal. Their idea is
-          to replace the traditional silk with Lotus silk which opts as the best alternative
-          option and is eco friendly as well.
-        </p>
-
-      </div>
-    </div>
-
-
-    <!-- slide 9 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Cm8y8tzPPrW/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Style_Swap.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2023</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team " Style_Swap " as the joint runner up of HULT Prize
-          '23 , OnCampus Round, NIT Durgapur. The team comprised of 1st-year students, namely
-          Mohd Shoeb, Akash Dutta, Rohan Dutta and Ritik Kumar Bind. Their idea is to escalate
-          fashion by providing the latest trends on a rental basis thereby reducing clothes
-          per head and thus pollution.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 1 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Ca17rJDPTZV/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Trouvaillieur.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>Winners</h3>
-          <h2>2021</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team "Trouvailleur" as the Winner of HULT Prize '22,
-          OnCampus Round, NIT Durgapur. The team comprised of 1st year students, namely
-          Hiya Aidasani, Aditya Agarwal, Debanjan Bhattacharjee and Kshitiz Chadha.
-          Their idea involves the integration of real and
-          virtual tourism, and thus providing employments for local communities.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 2 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Ca16tjAPxv0/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/AAKARSH.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2021</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team "Aakarsh" as the Joint Runner Up of HULT Prize '22,
-          OnCampus Round, NIT Durgapur. The team comprised of 1st year students, namely Priyanshu Bartwal,
-          Anshu Agarwal, Liza Gupta and Bedabrata Brahma. Their idea involves the revival of the
-          captivating collection of lost Indian culture and providing the local artisans, a platform to manufacture
-          products and art in old traditional ways along with a ready market.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 3 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/Ca17D6ePz-f/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Homely Bites.png' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2021</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team EDC is proud to announce Team "Homely Bites" as the Joint Runner Up of HULT Prize '22, OnCampus Round,
-          NIT Durgapur.
-          The team comprised of 1st year students, namely Mohd Shoeb, Poorab Kumar, Sanvie Singhal and Manshi Singh.
-          Their idea
-          involves the provision of home-style meals and local delicacies, prepared by small scale shops at minimal
-          price and time.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 4 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/CI0sqR-jmD6/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Vikaar.jpg' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>Winners</h3>
-          <h2>2019</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team 'Vikaar' was adjudged the Winners at the first Hult Prize OnCampus Finals at NIT Durgapur.
-          Comprising of 2nd year students, Abha Jha, Ankit Rai, Ritabrata Ganguly and Sebontika Bose,
-          their idea was based on the use of surplus grain and properly channelling it into useful
-          products and food items.
-          The uniqueness and creativity in their idea really impressed the judges who unanimously
-          declared them the winners.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 5 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/CI0oPdGj1pH/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Sahara.jpg' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2019</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team 'Sahara' was adjudged the 1st Runner-up at the first Hult Prize OnCampus Finals at
-          NIT Durgapur. Comprising of 1st year students, Purvi Binani, Shruti Sharma, Zoya Ahmed and
-          Sudeshna Saha, their idea revolves around setting up 'Healthy Vending' machines to provide
-          nutritious meals using produce from nearby farms to cater to the needs of corporate sectors,
-          colleges and hospitals.
-        </p>
-
-      </div>
-    </div>
-
-    <!-- slide 6 -->
-    <div class="swiper-slide">
-      <div class="swiperImg">
-        <a href="https://www.instagram.com/p/CI0gK19Dji0/" target="_blank">
-          <img class="imgTransition" id="imgTransition" src="{% static 'assets/Morph.jpg' %}" alt="">
-        </a>
-      </div>
-      <div class="swiperContent">
-        <div class="title">
-          <h3>RunnerUps</h3>
-          <h2>2019</h2>
-        </div>
-        <p class="contentTransition" id="contentTransition">
-          Team 'Morph' was adjudged the 2nd Runner-up at the first Hult Prize OnCampus Finals at
-          NIT Durgapur. Comprising of 2nd year students, Devansh Goyal, Raj Gaurav, Aniket Verma and
-          Pushpanjali Bharti, their idea was to directly link farmers with local restaurants, thus
-          eliminating the middlemen in between and creating value and empowerment for both the farmers
-          and the local restaurants.
-        </p>
-
-      </div>
-    </div>
-
-
-
-  </div>
-  <div class="swiper-button-next swiperBtn" id="autoClick"></div>
-  <div class="swiper-button-prev swiperBtn"></div>
-  <div class="swiper-pagination"></div>
-</div>
-
+</section>
 
 {% endblock body %}
-{% block script %}
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-<script src="{%static 'js/swiper.js' %}"></script>
-<script>
-  const closeBtn = document.querySelector(".btn-close");
-  if (closeBtn) {
-    closeBtn.addEventListener("click", () => {
-      document.querySelector(".alert").style.display = "none";
-    });
-  }
-</script>
-<script>
-  const faders = document.querySelectorAll('.fade-in');
-  const sliders = document.querySelectorAll('.slide-in');
-  const appearOptions = {
-    threshold: 0.7,
-    rootMargin: "0px 0px 100px 0px"
-  };
-  const appearOnScroll = new IntersectionObserver(function (
-    entries,
-    appearOnScroll) {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-        else {
-          entry.target.classList.add('appear');
-          appearOnScroll.unobserve(entry.target);
-        }
-      });
-  }, appearOptions);
 
-  faders.forEach(fader => {
-    appearOnScroll.observe(fader);
+{% block script %}
+<script>
+  // Preloader
+  window.addEventListener('load', function() {
+    setTimeout(() => {
+      document.getElementById('preloader').style.display = 'none';
+    }, 1500);
   });
-  sliders.forEach(slider => {
-    appearOnScroll.observe(slider);
-  })
+  
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
 </script>
 {% endblock script %}

@@ -1,58 +1,214 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %}Hult Prize - Sign Up{% endblock title%} 
-{% block css %}
+{% extends 'base.html' %} {% load static %} {% block title %}Hult Prize - Sign
+Up{% endblock title%} {% block css %}
 <style>
-  #preloader{
-  background: white no-repeat center center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-}
+  #preloader {
+    background: white no-repeat center center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+  }
 
-.field {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#off-1, #off-2, #on-1, #on-2 {
-  color: rgba(0, 0, 0, 0.55);
-  cursor: pointer;
-}
-#password-correct {
-  display: none;
-  color: green;
-  margin-right: 7px;
-}
-#password-wrong {
-  display: none;
-  color: red;
-  margin-right: 7px;
-}
+  body {
+    background: var(--pink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .signup-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 2rem 40px;
+  }
+
+  .signup-card {
+    background-color: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 50px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .signup-logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .signup-logo img {
+    width: 150px;
+    height: auto;
+  }
+
+  .signup-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: "Inter", "Poppins", sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(236, 0, 140, 0.1);
+  }
+
+  .password-field {
+    position: relative;
+  }
+
+  .password-field input {
+    padding-right: 50px;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gray-text);
+    font-size: 20px;
+  }
+
+  .password-indicator {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+
+  .password-indicator.correct {
+    color: #29a64c;
+    display: none;
+  }
+
+  .password-indicator.wrong {
+    color: #dc2626;
+    display: none;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 24px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(236, 0, 140, 0.4);
+  }
+
+  .login-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--gray-text);
+  }
+
+  .login-link a {
+    color: var(--pink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .signup-card {
+      padding: 35px 25px;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .signup-container {
+      padding: 100px 1.5rem 30px;
+    }
+  }
 </style>
-<link rel="stylesheet" href="{% static 'css/signup.css' %}" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-{% endblock css %} 
-
-{% block body %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">
-  <strong>Message : </strong> &nbsp;{{ message }}
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+/>
+{% endblock css %} {% block body %} {% for message in messages %}
+<div
+  class="alert alert-{{ message.tags }}"
+  role="alert"
+  style="
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    background-color: var(--pink);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+  "
+>
+  <strong>Message: </strong> &nbsp;{{ message }}
   <button
     type="button"
     class="btn-close"
     data-bs-dismiss="alert"
     aria-label="Close"
+    style="
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 10px;
+    "
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="24"
+      height="24"
       fill="currentColor"
-      class="bi bi-x"
       viewBox="0 0 16 16"
     >
       <path
@@ -62,175 +218,219 @@
   </button>
 </div>
 {% endfor %}
+
 <!-- preloader -->
 <div id="preloader">
-  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-
-    <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+  <dotlottie-player
+    src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    loop
+    autoplay
+  ></dotlottie-player>
 </div>
 
-<div class="signup-box">
-  <div class="wrapper">
-    <img id="logo" src="{% static 'assets/hultPrizeLogo.png' %}" />
-    <div class="title-text">
-      <div class="title login">Sign up</div>
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="signup-logo">
+      <img
+        src="{% static 'assets/hultPrizeLogo.png' %}"
+        alt="Hult Prize Logo"
+      />
     </div>
-    <div class="form-container">
-      <div class="form-inner">
-        <form action="/signup" class="login" method="POST">
-          {% csrf_token %}
-          <div class="field">
-            <input
-              type="text"
-              placeholder="Username"
-              id="username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="flexbox">
-            <div class="field marginright">
-              <input
-                type="text"
-                class="width50"
-                placeholder="First Name"
-                id="first_name"
-                name="first_name"
-              />
-            </div>
-            <div class="spacex"></div>
-            <div class="field marginleft">
-              <input
-                type="text"
-                class="width50"
-                placeholder="Last Name"
-                id="last_name"
-                name="last_name"
-              />
-            </div>
-          </div>
-          <div class="space"></div>
-          <div class="field">
-            <input
-              type="email"
-              placeholder="Email Address"
-              id="email"
-              name="email"
-              required
-            />
-          </div>
-          <div class="space"></div>
-          <div class="field">
-            <input
-              type="text"
-              placeholder="Phone No."
-              id="phone-no"
-              name="phone-no"
-              required
-            />
-          </div>
-          <div class="space"></div>
-          <div class="field">
-            <input
-              type="password"
-              placeholder="Password"
-              id="password1"
-              name="password1"
-              required
-            />
-            <span class="material-symbols-outlined" id="off-1">
-              visibility_off
-            </span>
-            <span class="material-symbols-outlined" style="display: none" id="on-1">
-              visibility
-            </span>
-          </div>
-          <div class="space"></div>
-          <div class="field">
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              id="password2"
-              name="password2"
-              required
-            />
-            <span class="material-symbols-outlined" id="password-correct">
-              check
-            </span>
-            <span class="material-symbols-outlined" id="password-wrong">
-              error
-            </span>
-            <span class="material-symbols-outlined" id="off-2">
-              visibility_off
-            </span>
-            <span class="material-symbols-outlined" id="on-2" style="display: none">
-              visibility
-            </span>
-          </div>
-          <div class="field btn">
-            <div class="btn-layer"></div>
-            <input type="submit" value="Sign in" id="btnLogin" />
-          </div>
-          <div class="login-link">
-            Already Have an Account? <a href="/login">Login</a>
-          </div>
-        </form>
+    <h1 class="signup-title">Create Account</h1>
+
+    <form action="/signup" method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Username"
+          id="username"
+          name="username"
+          required
+        />
       </div>
-    </div>
+
+      <div class="form-row">
+        <input
+          type="text"
+          class="form-input"
+          placeholder="First Name"
+          id="first_name"
+          name="first_name"
+        />
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Last Name"
+          id="last_name"
+          name="last_name"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-input"
+          placeholder="Email Address"
+          id="email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Phone Number"
+          id="phone-no"
+          name="phone-no"
+          required
+        />
+      </div>
+
+      <div class="form-group password-field">
+        <input
+          type="password"
+          class="form-input"
+          placeholder="Password"
+          id="password1"
+          name="password1"
+          required
+        />
+        <span class="material-symbols-outlined password-toggle" id="off-1">
+          visibility_off
+        </span>
+        <span
+          class="material-symbols-outlined password-toggle"
+          style="display: none"
+          id="on-1"
+        >
+          visibility
+        </span>
+      </div>
+
+      <div class="form-group password-field">
+        <input
+          type="password"
+          class="form-input"
+          placeholder="Confirm Password"
+          id="password2"
+          name="password2"
+          required
+        />
+        <span
+          class="material-symbols-outlined password-indicator correct"
+          id="password-correct"
+        >
+          check
+        </span>
+        <span
+          class="material-symbols-outlined password-indicator wrong"
+          id="password-wrong"
+        >
+          error
+        </span>
+        <span class="material-symbols-outlined password-toggle" id="off-2">
+          visibility_off
+        </span>
+        <span
+          class="material-symbols-outlined password-toggle"
+          style="display: none"
+          id="on-2"
+        >
+          visibility
+        </span>
+      </div>
+
+      <button type="submit" class="submit-btn">Sign Up</button>
+
+      <div class="login-link">
+        Already have an account? <a href="/login">Login</a>
+      </div>
+    </form>
   </div>
 </div>
-{% endblock body %}
-{% block script %}
+{% endblock body %} {% block script %}
 <script>
+  // Preloader
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      document.getElementById("preloader").style.display = "none";
+    }, 1500);
+  });
+
+  // Close alert
   const closeBtn = document.querySelector(".btn-close");
-  if(closeBtn) {
+  if (closeBtn) {
     closeBtn.addEventListener("click", () => {
       document.querySelector(".alert").style.display = "none";
     });
   }
-  const off1 = document.getElementById('off-1');
-  off1.addEventListener('click', () => {
+
+  // Password visibility toggles
+  const off1 = document.getElementById("off-1");
+  off1.addEventListener("click", () => {
     off1.style.display = "none";
-    document.getElementById('on-1').style.display = "block";
-    document.getElementById('password1').type = "text";
+    document.getElementById("on-1").style.display = "block";
+    document.getElementById("password1").type = "text";
   });
-  const on1 = document.getElementById('on-1');
-  on1.addEventListener('click', () => {
+
+  const on1 = document.getElementById("on-1");
+  on1.addEventListener("click", () => {
     off1.style.display = "block";
     on1.style.display = "none";
-    document.getElementById('password1').type = "password";
+    document.getElementById("password1").type = "password";
   });
-  const off2 = document.getElementById('off-2');
-  off2.addEventListener('click', () => {
+
+  const off2 = document.getElementById("off-2");
+  off2.addEventListener("click", () => {
     off2.style.display = "none";
-    document.getElementById('on-2').style.display = "block";
-    document.getElementById('password2').type = "text";
+    document.getElementById("on-2").style.display = "block";
+    document.getElementById("password2").type = "text";
   });
-  const on2 = document.getElementById('on-2');
-  on2.addEventListener('click', () => {
+
+  const on2 = document.getElementById("on-2");
+  on2.addEventListener("click", () => {
     off2.style.display = "block";
     on2.style.display = "none";
-    document.getElementById('password2').type = "password";
+    document.getElementById("password2").type = "password";
   });
-  document.getElementById('password2').addEventListener('input', () => {
-    if(document.getElementById('password2').value == document.getElementById('password1').value) {
-      document.getElementById('password-correct').style.display = "block";
-      document.getElementById('password-wrong').style.display = "none";
-    }
-    else {
-      document.getElementById('password-correct').style.display = "none";
-      document.getElementById('password-wrong').style.display = "block";
+
+  // Password match validation
+  document.getElementById("password2").addEventListener("input", () => {
+    if (
+      document.getElementById("password2").value ==
+      document.getElementById("password1").value
+    ) {
+      document.getElementById("password-correct").style.display = "block";
+      document.getElementById("password-wrong").style.display = "none";
+    } else {
+      document.getElementById("password-correct").style.display = "none";
+      document.getElementById("password-wrong").style.display = "block";
     }
   });
-  document.getElementById('password1').addEventListener('input', () => {
-    if(document.getElementById('password2').value == document.getElementById('password1').value) {
-      document.getElementById('password-correct').style.display = "block";
-      document.getElementById('password-wrong').style.display = "none";
-    }
-    else {
-      if(document.getElementById('password2').value != "") {
-      document.getElementById('password-correct').style.display = "none";
-      document.getElementById('password-wrong').style.display = "block";
+
+  document.getElementById("password1").addEventListener("input", () => {
+    if (
+      document.getElementById("password2").value ==
+      document.getElementById("password1").value
+    ) {
+      document.getElementById("password-correct").style.display = "block";
+      document.getElementById("password-wrong").style.display = "none";
+    } else {
+      if (document.getElementById("password2").value != "") {
+        document.getElementById("password-correct").style.display = "none";
+        document.getElementById("password-wrong").style.display = "block";
       }
     }
   });

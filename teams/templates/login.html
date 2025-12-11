@@ -1,51 +1,201 @@
-
-{% extends 'base.html' %}
-{% load static %}
-{% block title %}Hult Prize - Login{% endblock title %}
-{% block css %}
+{% extends 'base.html' %} {% load static %} {% block title %}Hult Prize -
+Login{% endblock title %} {% block css %}
 <style>
-  #preloader{
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  
-}
+  #preloader {
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+  }
 
-.field {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#off, #on {
-  color: rgba(0, 0, 0, 0.55);
-  cursor: pointer;
-}
+  body {
+    background: var(--pink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 2rem 40px;
+  }
+
+  .login-card {
+    background-color: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 50px;
+    max-width: 450px;
+    width: 100%;
+  }
+
+  .login-logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .login-logo img {
+    width: 150px;
+    height: auto;
+  }
+
+  .login-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: "Inter", "Poppins", sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(236, 0, 140, 0.1);
+  }
+
+  .password-field {
+    position: relative;
+  }
+
+  .password-field input {
+    padding-right: 50px;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gray-text);
+    font-size: 20px;
+  }
+
+  .forgot-link {
+    text-align: right;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .forgot-link a {
+    color: var(--pink);
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .forgot-link a:hover {
+    text-decoration: underline;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(236, 0, 140, 0.4);
+  }
+
+  .signup-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--gray-text);
+  }
+
+  .signup-link a {
+    color: var(--pink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    .login-card {
+      padding: 35px 25px;
+    }
+
+    .login-container {
+      padding: 100px 1.5rem 30px;
+    }
+  }
 </style>
-<link rel="stylesheet" href="{% static 'css/login.css' %}" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-{% endblock css %}
-
-{% block body %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" role="alert">
-  <strong>Message : </strong> &nbsp;{{ message }}
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+/>
+{% endblock css %} {% block body %} {% for message in messages %}
+<div
+  class="alert alert-{{ message.tags }}"
+  role="alert"
+  style="
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    background-color: var(--pink);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+  "
+>
+  <strong>Message: </strong> &nbsp;{{ message }}
   <button
     type="button"
     class="btn-close"
     data-bs-dismiss="alert"
     aria-label="Close"
+    style="
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      margin-left: 10px;
+    "
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="24"
+      height="24"
       fill="currentColor"
-      class="bi bi-x"
       viewBox="0 0 16 16"
     >
       <path
@@ -55,85 +205,110 @@
   </button>
 </div>
 {% endfor %}
+
 <!-- preloader -->
 <div id="preloader">
-  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-
-    <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
+  <dotlottie-player
+    src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    loop
+    autoplay
+  ></dotlottie-player>
 </div>
 
-<div class="login-box">
-  <div class="wrapper">
-    <img id="logo" src="{% static 'assets/hultPrizeLogo.png' %}" />
-    <div class="title-text">
-      <div class="title login">Login</div>
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-logo">
+      <img
+        src="{% static 'assets/edcnitd.png' %}"
+        alt="Hult Prize Logo"
+      />
     </div>
-    <div class="form-container">
-      <div class="form-inner">
-        <form action="/login" method="POST" class="login">
-          {% csrf_token %}
-          <div class="field">
-            <input
-              type="text"
-              placeholder="Username"
-              id="username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="space"></div>
-          <div class="field">
-            <input
-              type="password"
-              placeholder="Password"
-              id="password"
-              name="password"
-              required
-            />
-            <span class="material-symbols-outlined" id="off">
-              visibility_off
-            </span>
-            <span class="material-symbols-outlined" style="display: none" id="on">
-              visibility
-            </span>
-          </div>
-          <div class="space"></div>
-          <div class="forgot-password-link">
-            <a href="/request-password-reset">Forgot password?</a>
-          </div>
-          <div class="field btn">
-            <div class="btn-layer"></div>
-            <input type="submit" value="Login" id="btnLogin" />
-          </div>
+    <h1 class="login-title">Welcome Back</h1>
 
-          <div class="signup-link">
-            Not a member? <a href="/signup">Signup now</a>
-          </div>
-        </form>
+    <form action="/login" method="POST">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-input"
+          placeholder="Username"
+          id="username"
+          name="username"
+          required
+        />
       </div>
-    </div>
+
+      <div class="form-group password-field">
+        <input
+          type="password"
+          class="form-input"
+          placeholder="Password"
+          id="password"
+          name="password"
+          required
+        />
+        <span class="material-symbols-outlined password-toggle" id="off">
+          visibility_off
+        </span>
+        <span
+          class="material-symbols-outlined password-toggle"
+          style="display: none"
+          id="on"
+        >
+          visibility
+        </span>
+      </div>
+
+      <div class="forgot-link">
+        <a href="/request-password-reset">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="submit-btn">Login</button>
+
+      <div class="signup-link">
+        Don't have an account? <a href="/signup">Sign up</a>
+      </div>
+    </form>
   </div>
 </div>
-{% endblock body %}
-{% block script %}
+{% endblock body %} {% block script %}
 <script>
+  // Preloader
+  window.addEventListener("load", function () {
+    setTimeout(() => {
+      document.getElementById("preloader").style.display = "none";
+    }, 1500);
+  });
+
+  // Close alert
   const closeBtn = document.querySelector(".btn-close");
-  if(closeBtn) {
+  if (closeBtn) {
     closeBtn.addEventListener("click", () => {
       document.querySelector(".alert").style.display = "none";
     });
   }
-  const off = document.getElementById('off');
-  off.addEventListener('click', () => {
+
+  // Password visibility toggle
+  const off = document.getElementById("off");
+  off.addEventListener("click", () => {
     off.style.display = "none";
-    document.getElementById('on').style.display = "block";
-    document.getElementById('password').type = "text";
+    document.getElementById("on").style.display = "block";
+    document.getElementById("password").type = "text";
   });
-  const on = document.getElementById('on');
-  on.addEventListener('click', () => {
+
+  const on = document.getElementById("on");
+  on.addEventListener("click", () => {
     off.style.display = "block";
     on.style.display = "none";
-    document.getElementById('password').type = "password";
+    document.getElementById("password").type = "password";
   });
 </script>
 {% endblock script %}

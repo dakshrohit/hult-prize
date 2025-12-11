@@ -23,5 +23,5 @@ urlpatterns = [
     path('request-password-reset',views.forgotPassword,name="request_password_reset"),
     path('request-password-reset/confirm/<uidb64>/<token>/',views.reset_password_confirm,name="confirm_password_reset"),
     path('reset-token', views.resettoken, name="reset-token"),
-    path('quiz/', include('quiz.urls'))
+    # path('quiz/', include('quiz.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
