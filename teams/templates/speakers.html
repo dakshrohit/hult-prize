@@ -1,0 +1,912 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Winners & Speakers
+- Hult Prize NITD{% endblock title %} {% block css %}
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .gradient-banner {
+    background: linear-gradient(90deg, #2a1dd8 0%, #ce038c 100%);
+    padding: 14px 0;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    margin-top: 70px;
+  }
+
+  .gradient-banner a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gradient-banner a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 968px) {
+    .gradient-banner {
+      margin-top: 65px;
+      padding: 12px 0;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .gradient-banner {
+      padding: 10px 0;
+    }
+
+    .gradient-banner a {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gradient-banner {
+      padding: 8px 0;
+    }
+
+    .gradient-banner a {
+      font-size: 11px;
+    }
+  }
+
+  /* Hero Section */
+  .speakers-hero {
+    background: linear-gradient(135deg, #1d1563 0%, #0d0b3d 100%);
+    padding: 100px 2rem 80px;
+    text-align: center;
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .speakers-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 20% 30%,
+        rgba(236, 0, 140, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(42, 29, 216, 0.1) 0%,
+        transparent 50%
+      );
+    pointer-events: none;
+  }
+
+  .speakers-hero h1 {
+    font-size: 64px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -1px;
+  }
+
+  .speakers-hero p {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Winners Section */
+  .winners-section {
+    padding: 100px 2rem;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+
+  .section-header h2 {
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 20px;
+    letter-spacing: -1.5px;
+  }
+
+  .section-header p {
+    font-size: 20px;
+    color: var(--gray-text);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Year Section */
+  .year-section {
+    max-width: 1400px;
+    margin: 0 auto 100px;
+  }
+
+  .year-header {
+    text-align: center;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .year-title {
+    display: inline-block;
+    font-size: 48px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+
+  .year-divider {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--pink) 0%, var(--purple) 100%);
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  /* Winners Grid */
+  .winners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .winner-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .winner-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  .winner-card-image {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .winner-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #f8fafc;
+    transition: transform 0.4s ease;
+    padding: 10px;
+  }
+
+  .winner-card:hover .winner-card-image img {
+    transform: scale(1.05);
+  }
+
+  .winner-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    color: var(--white);
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 16px rgba(236, 0, 140, 0.3);
+    z-index: 10;
+  }
+
+  .winner-badge.runner-up {
+    background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+    box-shadow: 0 4px 16px rgba(100, 116, 139, 0.3);
+  }
+
+  .winner-badge.special {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+  }
+
+  .winner-card-content {
+    padding: 28px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .winner-card-content h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 12px;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .winner-card-content p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gray-text);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    flex: 1;
+  }
+
+  /* Speakers & Mentors Section */
+  .speakers-mentors-section {
+    padding: 100px 2rem;
+    background: var(--white);
+  }
+
+  .speaker-item {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .speaker-item.reverse {
+    direction: rtl;
+  }
+
+  .speaker-item.reverse > * {
+    direction: ltr;
+  }
+
+  .speaker-image img {
+    width: 100%;
+    height: 480px;
+    object-fit: contain;
+    background: #f8fafc;
+    border-radius: 20px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+    transition: all 0.4s ease;
+    padding: 20px;
+  }
+
+  .speaker-image img:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .speaker-content {
+    padding: 20px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .speaker-badge {
+    display: inline-block;
+    padding: 10px 24px;
+    background: #f1f5f9;
+    color: var(--purple);
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .speaker-badge.judge {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(236, 0, 140, 0.25);
+  }
+
+  .speaker-badge.mentor {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.25);
+  }
+
+  .speaker-badge.speaker {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: var(--white);
+    box-shadow: 0 4px 16px rgba(6, 182, 212, 0.25);
+  }
+
+  .speaker-content h3 {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--black);
+    margin-bottom: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .speaker-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--gray-text);
+    margin-bottom: 14px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .speaker-content p:last-child {
+    color: #475569;
+    font-weight: 500;
+  }
+
+  /* Responsive */
+  @media (max-width: 968px) {
+    .speakers-hero h1 {
+      font-size: 42px;
+    }
+
+    .section-header h2 {
+      font-size: 40px;
+    }
+
+    .year-title {
+      font-size: 36px;
+    }
+
+    .winners-grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .winner-card-image {
+      height: 350px;
+    }
+
+    .speaker-item {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .speaker-item.reverse {
+      direction: ltr;
+    }
+
+    .speaker-content h3 {
+      font-size: 32px;
+    }
+
+    .speaker-image img {
+      height: 400px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .speakers-hero h1 {
+      font-size: 32px;
+    }
+
+    .section-header h2 {
+      font-size: 32px;
+    }
+
+    .year-title {
+      font-size: 28px;
+    }
+
+    .winner-card-image {
+      height: 300px;
+    }
+
+    .speaker-image img {
+      height: 300px;
+    }
+  }
+</style>
+{% endblock css %} {% block body %}
+<!-- Gradient Banner -->
+<div class="gradient-banner">
+  <a href="/faqs">Meet Stick 'Em, our 2025 Hult Prize winners →</a>
+</div>
+
+<!-- Hero Section -->
+<section class="speakers-hero">
+  <h1>Winners & Speakers</h1>
+  <p>Celebrating our champions and learning from industry leaders</p>
+</section>
+
+<!-- Winners Section -->
+<section class="winners-section">
+  <div class="section-header">
+    <h2>Hall of Champions</h2>
+    <p>
+      Celebrating the visionary teams that transformed ideas into impact across
+      the years
+    </p>
+  </div>
+
+  <!-- 2025 Winners -->
+  <div class="year-section">
+    <div class="year-header">
+      <h3 class="year-title">2025</h3>
+      <div class="year-divider"></div>
+    </div>
+    <div class="winners-grid">
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge">Winner</span>
+          <img src="{% static 'assets/fabricius.jpg' %}" alt="Fabricius" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Fabricius</h3>
+          <p>
+            Revolutionizing textile sustainability with innovative recycling
+            solutions that transform fabric waste into premium quality
+            materials.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/curatech.jpg' %}" alt="Curatech" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Curatech</h3>
+          <p>
+            Pioneering healthcare technology that brings affordable medical
+            diagnostics to underserved communities through AI-powered solutions.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge special">Special Mention</span>
+          <img src="{% static 'assets/dronarjuna.jpg' %}" alt="Dronarjuna" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Dronarjuna</h3>
+          <p>
+            Transforming agriculture with precision drone technology that helps
+            farmers optimize crop health and maximize yields sustainably.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2024 Winners -->
+  <div class="year-section">
+    <div class="year-header">
+      <h3 class="year-title">2024</h3>
+      <div class="year-divider"></div>
+    </div>
+    <div class="winners-grid">
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge">Winner</span>
+          <img src="{% static 'assets/terranova.jpg' %}" alt="Terranova" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Terranova</h3>
+          <p>
+            Leading sustainable agriculture innovation with smart farming
+            solutions that empower farmers while protecting the environment.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/Erneult.png' %}" alt="Erneult" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Erneult</h3>
+          <p>
+            Creating renewable energy storage solutions that enable communities
+            to harness and utilize clean power efficiently.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/biopen.png' %}" alt="Biopen" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Biopen</h3>
+          <p>
+            Developing biodegradable writing instruments that reduce plastic
+            waste while maintaining quality and affordability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2023 Winners -->
+  <div class="year-section">
+    <div class="year-header">
+      <h3 class="year-title">2023</h3>
+      <div class="year-divider"></div>
+    </div>
+    <div class="winners-grid">
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge">Winner</span>
+          <img src="{% static 'assets/NeoDynamo.png' %}" alt="NeoDynamo" />
+        </div>
+        <div class="winner-card-content">
+          <h3>NeoDynamo</h3>
+          <p>
+            Bringing clean, affordable renewable energy to developing
+            communities with innovative solar technology solutions.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/Dumbledore.png' %}" alt="Dumbledore" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Dumbledore</h3>
+          <p>
+            Revolutionizing waste management through smart recycling platforms
+            connecting waste generators with efficient recyclers.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/Style_Swap.png' %}" alt="Style Swap" />
+        </div>
+        <div class="winner-card-content">
+          <h3>Style Swap</h3>
+          <p>
+            Building a circular fashion economy by creating a platform for
+            sustainable clothing exchange and upcycling.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2022 Winners -->
+  <div class="year-section">
+    <div class="year-header">
+      <h3 class="year-title">2022</h3>
+      <div class="year-divider"></div>
+    </div>
+    <div class="winners-grid">
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge">Winner</span>
+          <img
+            src="{% static 'assets/Trouvaillieur.png' %}"
+            alt="Trouvaillieur"
+          />
+        </div>
+        <div class="winner-card-content">
+          <h3>Trouvaillieur</h3>
+          <p>
+            Connecting skilled artisans with global markets while preserving
+            traditional crafts and ensuring fair wages.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img
+            src="{% static 'assets/Homely Bites.png' %}"
+            alt="Homely Bites"
+          />
+        </div>
+        <div class="winner-card-content">
+          <h3>Homely Bites</h3>
+          <p>
+            Empowering home chefs and addressing food security by creating a
+            platform for healthy, home-cooked meal delivery.
+          </p>
+        </div>
+      </div>
+      <div class="winner-card">
+        <div class="winner-card-image">
+          <span class="winner-badge runner-up">Runner-Up</span>
+          <img src="{% static 'assets/AAKARSH.png' %}" alt="AAKARSH" />
+        </div>
+        <div class="winner-card-content">
+          <h3>AAKARSH</h3>
+          <p>
+            Democratizing quality education access through affordable digital
+            learning platforms for rural communities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Speakers & Mentors Section -->
+<section class="speakers-mentors-section">
+  <div class="section-header">
+    <h2>Speakers & Mentors 2025</h2>
+    <p>Learn from the best minds guiding our entrepreneurial journey</p>
+  </div>
+
+  <!-- Judge 1 -->
+  <div class="speaker-item">
+    <div class="speaker-image">
+      <img src="{% static 'assets/vinaypatiljudge.jpg' %}" alt="Vinay Patil" />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge judge">Judge</span>
+      <h3>Vinay Patil</h3>
+      <p>
+        Serial entrepreneur and venture capitalist with over 15 years of
+        experience in building and scaling startups across Southeast Asia.
+      </p>
+      <p>
+        Vinay has mentored over 100 startups and invested in innovative
+        solutions addressing social challenges.
+      </p>
+      <p>
+        His expertise in impact investing and sustainable business models makes
+        him an invaluable guide for aspiring entrepreneurs.
+      </p>
+    </div>
+  </div>
+
+  <!-- Mentor 1 -->
+  <div class="speaker-item reverse">
+    <div class="speaker-image">
+      <img src="{% static 'assets/mananbedimentor.jpg' %}" alt="Manan Bedi" />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge mentor">Mentor</span>
+      <h3>Manan Bedi</h3>
+      <p>
+        Tech innovator and startup advisor specializing in product development
+        and go-to-market strategies.
+      </p>
+      <p>
+        Manan has helped numerous early-stage companies refine their products
+        and achieve product-market fit.
+      </p>
+      <p>
+        His hands-on approach to mentorship focuses on practical problem-solving
+        and rapid iteration.
+      </p>
+    </div>
+  </div>
+
+  <!-- Judge 2 -->
+  <div class="speaker-item">
+    <div class="speaker-image">
+      <img src="{% static 'assets/trinadasjudge.jpg' %}" alt="Trina Das" />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge judge">Judge</span>
+      <h3>Trina Das</h3>
+      <p>
+        Social impact leader and sustainability expert with a proven track
+        record in environmental entrepreneurship.
+      </p>
+      <p>
+        Trina's work focuses on circular economy principles and creating
+        businesses that benefit both people and planet.
+      </p>
+      <p>
+        She brings deep expertise in ESG frameworks and sustainable supply chain
+        management.
+      </p>
+    </div>
+  </div>
+
+  <!-- Speaker 1 -->
+  <div class="speaker-item reverse">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/tanyakathpalhult2025speaker.jpg' %}"
+        alt="Tanya Kathpal"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge speaker">Speaker</span>
+      <h3>Tanya Kathpal</h3>
+      <p>
+        Award-winning social entrepreneur and founder of multiple impact-driven
+        ventures in education and healthcare.
+      </p>
+      <p>
+        Tanya's inspiring journey from idea to impact has touched thousands of
+        lives across rural India.
+      </p>
+      <p>
+        Her insights on building resilient teams and navigating challenges
+        resonate with aspiring changemakers.
+      </p>
+    </div>
+  </div>
+
+  <!-- Judge 3 -->
+  <div class="speaker-item">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/shaileshganeriwalajudge.jpg' %}"
+        alt="Shailesh Ganeriwala"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge judge">Judge</span>
+      <h3>Shailesh Ganeriwala</h3>
+      <p>
+        Investment banker turned impact investor with expertise in financial
+        modeling and fundraising strategies.
+      </p>
+      <p>
+        Shailesh guides entrepreneurs in creating financially sustainable models
+        while maximizing social impact.
+      </p>
+      <p>
+        His network and experience in raising capital make him a crucial
+        resource for growth-stage startups.
+      </p>
+    </div>
+  </div>
+
+  <!-- Mentor 2 -->
+  <div class="speaker-item reverse">
+    <div class="speaker-image">
+      <img src="{% static 'assets/niveshrajmentor.jpg' %}" alt="Nivesh Raj" />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge mentor">Mentor</span>
+      <h3>Nivesh Raj</h3>
+      <p>
+        Technology evangelist and digital transformation expert helping startups
+        leverage cutting-edge technologies.
+      </p>
+      <p>
+        Nivesh specializes in AI, machine learning, and blockchain applications
+        for social good.
+      </p>
+      <p>
+        His technical mentorship helps teams build scalable, robust solutions
+        that can grow with demand.
+      </p>
+    </div>
+  </div>
+
+  <!-- Speaker 2 -->
+  <div class="speaker-item">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/supriyajangrespeakerhult2025.jpg' %}"
+        alt="Supriya Jangre"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge speaker">Speaker</span>
+      <h3>Supriya Jangre</h3>
+      <p>
+        Marketing strategist and brand builder specializing in purpose-driven
+        brands and social enterprises.
+      </p>
+      <p>
+        Supriya's expertise in storytelling and digital marketing has helped
+        numerous startups gain traction.
+      </p>
+      <p>
+        Her workshops on building authentic brands that resonate with customers
+        are highly sought after.
+      </p>
+    </div>
+  </div>
+
+  <!-- Judge 4 -->
+  <div class="speaker-item reverse">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/lakshmimohanbabujudge.jpg' %}"
+        alt="Lakshmi Mohan Babu"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge judge">Judge</span>
+      <h3>Lakshmi Mohan Babu</h3>
+      <p>
+        Operations excellence expert and supply chain specialist with experience
+        in building efficient systems.
+      </p>
+      <p>
+        Lakshmi helps startups streamline operations and create processes that
+        scale effectively.
+      </p>
+      <p>
+        Her practical approach to problem-solving ensures teams build strong
+        operational foundations.
+      </p>
+    </div>
+  </div>
+
+  <!-- Judge 5 -->
+  <div class="speaker-item">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/sagniksarkarjudge.jpg' %}"
+        alt="Sagnik Sarkar"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge judge">Judge</span>
+      <h3>Sagnik Sarkar</h3>
+      <p>
+        Legal and regulatory expert specializing in startup law, intellectual
+        property, and compliance.
+      </p>
+      <p>
+        Sagnik provides crucial guidance on legal structures, contracts, and
+        protecting intellectual assets.
+      </p>
+      <p>
+        His expertise helps entrepreneurs navigate complex regulatory landscapes
+        with confidence.
+      </p>
+    </div>
+  </div>
+
+  <!-- Speaker 3 -->
+  <div class="speaker-item reverse">
+    <div class="speaker-image">
+      <img
+        src="{% static 'assets/arunpanditspeaker2025hult.jpg' %}"
+        alt="Arun Pandit"
+      />
+    </div>
+    <div class="speaker-content">
+      <span class="speaker-badge speaker">Speaker</span>
+      <h3>Arun Pandit</h3>
+      <p>
+        Innovation strategist and design thinking facilitator helping teams
+        unlock creative potential.
+      </p>
+      <p>
+        Arun's workshops on human-centered design and innovation methodology
+        inspire breakthrough thinking.
+      </p>
+      <p>
+        His energy and passion for problem-solving create transformative
+        learning experiences for participants.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock body %}

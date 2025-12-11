@@ -153,18 +153,50 @@ Up{% endblock title%} {% block css %}
     text-decoration: underline;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 968px) {
+    .signup-container {
+      padding: 100px 2rem 40px;
+    }
+
     .signup-card {
-      padding: 35px 25px;
+      padding: 40px 30px;
+    }
+
+    .signup-card h1 {
+      font-size: 36px;
     }
 
     .form-row {
       grid-template-columns: 1fr;
       gap: 20px;
     }
+  }
 
+  @media (max-width: 600px) {
     .signup-container {
-      padding: 100px 1.5rem 30px;
+      padding: 80px 1rem 30px;
+    }
+
+    .signup-card {
+      padding: 30px 20px;
+    }
+
+    .signup-card h1 {
+      font-size: 28px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+    }
+
+    .form-control {
+      padding: 14px;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      padding: 14px;
+      font-size: 16px;
     }
   }
 </style>
@@ -238,10 +270,7 @@ Up{% endblock title%} {% block css %}
 <div class="signup-container">
   <div class="signup-card">
     <div class="signup-logo">
-      <img
-        src="{% static 'assets/hultPrizeLogo.png' %}"
-        alt="Hult Prize Logo"
-      />
+      <img src="{% static 'assets/edcnewlogo.png' %}" alt="Hult Prize Logo" />
     </div>
     <h1 class="signup-title">Create Account</h1>
 

@@ -18,11 +18,13 @@
 
 /* navbar */
 .navbar {
-  z-index: 20;
+  z-index: 1000;
   display: flex;
   background-color: #000000;
   height: 70px;
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -91,6 +93,10 @@
   width: 0px;
   visibility: hidden;
   z-index: 100;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20px;
 }
 .burger:hover {
   cursor: pointer;
@@ -98,15 +104,19 @@
 
 .burger .line {
   background-color: #ffffff;
-  margin: 3px;
-  padding: 1.5px;
+  width: 100%;
+  height: 3px;
   border-radius: 2px;
-  z-index: 100;
+  transition: all 0.3s ease;
 }
 
 .navbar-resp {
-  z-index: 15;
+  z-index: 999;
   background-color: #000000;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
   height: 267px;
   overflow: hidden;
   transition: height 0.7s ease-in-out;
@@ -140,24 +150,67 @@
 @media only screen and (max-width: 970px) {
   .navbar {
     width: 100vw;
-    /* height: 60px; */
-    /* position: fixed; */
+    padding: 0 1.5rem;
   }
+
+  .leftNavBar img {
+    width: 110px;
+  }
+
   .navbar-resp {
-    position: fixed;
-    width: 100%;
-    /* margin-top: 60px; */
-    /* height: 169px; */
+    top: 70px;
   }
   .rightNavBar a {
-    visibility: hidden;
+    visibility: hidden !important;
+    display: none;
   }
   .burger {
-    width: 30px;
-    visibility: visible;
+    width: 30px !important;
+    height: 20px;
+    visibility: visible !important;
+    display: flex !important;
   }
-  /* .activelink-resp {
-    color: black;
-    border-left: 3px solid rgb(230, 0, 127);
-  } */
+}
+
+@media only screen and (max-width: 600px) {
+  .navbar {
+    padding: 0 1rem;
+    height: 65px;
+  }
+
+  .leftNavBar img {
+    width: 95px;
+  }
+
+  .burger {
+    width: 28px;
+  }
+
+  .navbar-resp {
+    top: 65px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    padding: 0 0.75rem;
+  }
+
+  .leftNavBar img {
+    width: 85px;
+  }
+
+  .burger {
+    width: 26px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .navbar {
+    padding: 0 0.5rem;
+  }
+
+  .leftNavBar img {
+    width: 75px;
+  }
 }

@@ -1,8 +1,6 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %}Hult Prize - My Team{% endblock title %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/my-team.css'%}">
+{% extends 'base.html' %} {% load static %} {% block title %}Hult Prize - My
+Team{% endblock title %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/my-team.css'%}" />
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -14,19 +12,25 @@
 rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 /> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 <style>
-    #preloader{
-  background: white no-repeat center center;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  background-size: 10%;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-}
+  #preloader {
+    background: white no-repeat center center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    background-size: 10%;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+  }
 
   .card-header {
     background-color: rgb(230, 0, 127);
@@ -42,117 +46,126 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
     margin-top: 100px;
     height: 60vh;
   }
-  </style>
-{% endblock css %}
 
-{% block body %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  @media (max-width: 968px) {
+    .team-container {
+      margin-top: 80px;
+      padding: 20px 15px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .team-container {
+      margin-top: 60px;
+      padding: 15px 10px;
+      height: auto;
+      min-height: 50vh;
+    }
+
+    .card {
+      margin-bottom: 15px;
+    }
+  }
+</style>
+{% endblock css %} {% block body %} {% for message in messages %}
+<div
+  class="alert alert-{{ message.tags }} alert-dismissible fade show"
+  role="alert"
+>
   <strong>Message : </strong> {{ message }}
   <button
     type="button"
     class="btn-close"
     data-bs-dismiss="alert"
     aria-label="Close"
-  >
-  </button>
+  ></button>
 </div>
 {% endfor %}
 <!-- preloader -->
 <div id="preloader">
-  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
 
-    <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
+  <dotlottie-player
+    src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    loop
+    autoplay
+  ></dotlottie-player>
 </div>
 <!--  -->
 
 <div class="container team-container">
-    
-    {% for mt in my_team %}
-    <h2 class="my-3 teamName">My Team</h2>
-    <div class="line_"></div>
-    <div class="card my-3 w-100 w-md-50">        
-      <div class="card-header">
-        {{ mt.team_name }}
-        </div>
-        <ul class="list-group list-group-flush">
-        {% if mt.team_leader|length > 0 %}
-        <li class="list-group-item leader">
-          {{ mt.team_leader }}
-          <i class="fa-solid fa-crown"></i>
-        </li>
-        {% endif %}
-        {% for tm in mt.team_members %}
-        {% if tm.first_name|length > 0 %}
-        <li class="list-group-item">{{ tm.first_name }} {{ tm.last_name }}</li>
-        {% endif %}
-        {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
+  {% for mt in my_team %}
+  <h2 class="my-3 teamName">My Team</h2>
+  <div class="line_"></div>
+  <div class="card my-3 w-100 w-md-50">
+    <div class="card-header">{{ mt.team_name }}</div>
+    <ul class="list-group list-group-flush">
+      {% if mt.team_leader|length > 0 %}
+      <li class="list-group-item leader">
+        {{ mt.team_leader }}
+        <i class="fa-solid fa-crown"></i>
+      </li>
+      {% endif %} {% for tm in mt.team_members %} {% if tm.first_name|length > 0
+      %}
+      <li class="list-group-item">{{ tm.first_name }} {{ tm.last_name }}</li>
+      {% endif %} {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
 
-    <div class="logo my-3">
-      <img src="{% static 'assets/hultPrizeLogo.png' %}" alt="">
-    </div>
+  <div class="logo my-3">
+    <img src="{% static 'assets/hultprizelogonewcropped.png' %}" alt="" />
+  </div>
 </div>
-{% comment %} <!--  -->
-
-
+{% comment %}
+<!--  -->
 
 <!--  -->
 <div class="container">
   <div class="myTeam">
-      <h2>My Team</h2>
+    <h2>My Team</h2>
   </div>
   <div class="card">
-      <div class="title">
-          <div class="badge badge-leader">
-              <label for="team_name" class="form-label">
-                  Team Name
-              </label> 
-              <input type="text"
-              class="custom-input"
-              id="team_name"
-              name="team_name"
-              value="{{ team.team_name }}"
-              />
-          </div>
-          
+    <div class="title">
+      <div class="badge badge-leader">
+        <label for="team_name" class="form-label"> Team Name </label>
+        <input
+          type="text"
+          class="custom-input"
+          id="team_name"
+          name="team_name"
+          value="{{ team.team_name }}"
+        />
       </div>
-      <div class="flex">
+    </div>
+    <div class="flex">
       <div class="border">
-          <div class="leader">
-              <p class="leader-name">Team Leader Name</p>
-              <i class="fa-solid fa-crown"></i>
-          </div>
-          <div class="teamMembers">
-              <p class="name">Member1</p>
-              <p class="name">Member2</p>
-              <p class="name">Member3</p>
-          </div>
+        <div class="leader">
+          <p class="leader-name">Team Leader Name</p>
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div class="teamMembers">
+          <p class="name">Member1</p>
+          <p class="name">Member2</p>
+          <p class="name">Member3</p>
+        </div>
       </div>
       <div class="rightSide">
-          <div class="leaderNo number">
-              9034322233
-          </div>
-          <div class="member1No number">
-              9034322233
-          </div>
-          <div class="member2No number" >
-              9034322233
-          </div>
-          <div class="member3No number">
-              9034322233
-          </div>
+        <div class="leaderNo number">9034322233</div>
+        <div class="member1No number">9034322233</div>
+        <div class="member2No number">9034322233</div>
+        <div class="member3No number">9034322233</div>
       </div>
+    </div>
   </div>
-  </div>
-</div> {% endcomment %}
-
-
-{% endblock body %}
-
-{% block script %}
+</div>
+{% endcomment %} {% endblock body %} {% block script %}
 <script
   src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
   integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"

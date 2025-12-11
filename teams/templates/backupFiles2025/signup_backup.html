@@ -1,0 +1,374 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Hult Prize - Sign Up{% endblock title%} 
+{% block css %}
+<style>
+  #preloader {
+    background: white no-repeat center center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+  }
+  
+  body {
+    background: var(--pink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 2rem 40px;
+  }
+  
+  .signup-card {
+    background-color: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    padding: 50px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .signup-logo {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .signup-logo img {
+    width: 150px;
+    height: auto;
+  }
+  
+  .signup-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 32px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #E5E5E5;
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(236, 0, 140, 0.1);
+  }
+  
+  .password-field {
+    position: relative;
+  }
+  
+  .password-field input {
+    padding-right: 50px;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--gray-text);
+    font-size: 20px;
+  }
+  
+  .password-indicator {
+    position: absolute;
+    right: 45px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+  }
+  
+  .password-indicator.correct {
+    color: #29A64C;
+    display: none;
+  }
+  
+  .password-indicator.wrong {
+    color: #DC2626;
+    display: none;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 24px;
+  }
+  
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(236, 0, 140, 0.4);
+  }
+  
+  .login-link {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 15px;
+    color: var(--gray-text);
+  }
+  
+  .login-link a {
+    color: var(--pink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .signup-card {
+      padding: 35px 25px;
+    }
+    
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .signup-container {
+      padding: 100px 1.5rem 30px;
+    }
+  }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+{% endblock css %} 
+
+{% block body %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" role="alert">
+  <strong>Message : </strong> &nbsp;{{ message }}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="currentColor"
+      class="bi bi-x"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+      />
+    </svg>
+  </button>
+</div>
+{% endfor %}
+<!-- preloader -->
+<div id="preloader">
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+    <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
+</div>
+
+<div class="signup-box">
+  <div class="wrapper">
+    <img id="logo" src="{% static 'assets/hultprizelogonewcropped.png' %}" />
+    <div class="title-text">
+      <div class="title login">Sign up</div>
+    </div>
+    <div class="form-container">
+      <div class="form-inner">
+        <form action="/signup" class="login" method="POST">
+          {% csrf_token %}
+          <div class="field">
+            <input
+              type="text"
+              placeholder="Username"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="flexbox">
+            <div class="field marginright">
+              <input
+                type="text"
+                class="width50"
+                placeholder="First Name"
+                id="first_name"
+                name="first_name"
+              />
+            </div>
+            <div class="spacex"></div>
+            <div class="field marginleft">
+              <input
+                type="text"
+                class="width50"
+                placeholder="Last Name"
+                id="last_name"
+                name="last_name"
+              />
+            </div>
+          </div>
+          <div class="space"></div>
+          <div class="field">
+            <input
+              type="email"
+              placeholder="Email Address"
+              id="email"
+              name="email"
+              required
+            />
+          </div>
+          <div class="space"></div>
+          <div class="field">
+            <input
+              type="text"
+              placeholder="Phone No."
+              id="phone-no"
+              name="phone-no"
+              required
+            />
+          </div>
+          <div class="space"></div>
+          <div class="field">
+            <input
+              type="password"
+              placeholder="Password"
+              id="password1"
+              name="password1"
+              required
+            />
+            <span class="material-symbols-outlined" id="off-1">
+              visibility_off
+            </span>
+            <span class="material-symbols-outlined" style="display: none" id="on-1">
+              visibility
+            </span>
+          </div>
+          <div class="space"></div>
+          <div class="field">
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              id="password2"
+              name="password2"
+              required
+            />
+            <span class="material-symbols-outlined" id="password-correct">
+              check
+            </span>
+            <span class="material-symbols-outlined" id="password-wrong">
+              error
+            </span>
+            <span class="material-symbols-outlined" id="off-2">
+              visibility_off
+            </span>
+            <span class="material-symbols-outlined" id="on-2" style="display: none">
+              visibility
+            </span>
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Sign in" id="btnLogin" />
+          </div>
+          <div class="login-link">
+            Already Have an Account? <a href="/login">Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}
+{% block script %}
+<script>
+  const closeBtn = document.querySelector(".btn-close");
+  if(closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      document.querySelector(".alert").style.display = "none";
+    });
+  }
+  const off1 = document.getElementById('off-1');
+  off1.addEventListener('click', () => {
+    off1.style.display = "none";
+    document.getElementById('on-1').style.display = "block";
+    document.getElementById('password1').type = "text";
+  });
+  const on1 = document.getElementById('on-1');
+  on1.addEventListener('click', () => {
+    off1.style.display = "block";
+    on1.style.display = "none";
+    document.getElementById('password1').type = "password";
+  });
+  const off2 = document.getElementById('off-2');
+  off2.addEventListener('click', () => {
+    off2.style.display = "none";
+    document.getElementById('on-2').style.display = "block";
+    document.getElementById('password2').type = "text";
+  });
+  const on2 = document.getElementById('on-2');
+  on2.addEventListener('click', () => {
+    off2.style.display = "block";
+    on2.style.display = "none";
+    document.getElementById('password2').type = "password";
+  });
+  document.getElementById('password2').addEventListener('input', () => {
+    if(document.getElementById('password2').value == document.getElementById('password1').value) {
+      document.getElementById('password-correct').style.display = "block";
+      document.getElementById('password-wrong').style.display = "none";
+    }
+    else {
+      document.getElementById('password-correct').style.display = "none";
+      document.getElementById('password-wrong').style.display = "block";
+    }
+  });
+  document.getElementById('password1').addEventListener('input', () => {
+    if(document.getElementById('password2').value == document.getElementById('password1').value) {
+      document.getElementById('password-correct').style.display = "block";
+      document.getElementById('password-wrong').style.display = "none";
+    }
+    else {
+      if(document.getElementById('password2').value != "") {
+      document.getElementById('password-correct').style.display = "none";
+      document.getElementById('password-wrong').style.display = "block";
+      }
+    }
+  });
+</script>
+{% endblock script %}

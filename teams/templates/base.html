@@ -9,7 +9,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="{% static 'assets/favicon.ico' %}"
+      href="{% static 'assets/newfavicon.png' %}"
     />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -34,7 +34,7 @@
         --white: #ffffff;
         --gray-text: #6f6f6f;
         --gray-bg: #f5f5f5;
-        --skyblue: #0599e3;
+        --skyblue: #0174ad;
         --darkgreen: #0a6723;
       }
 
@@ -62,9 +62,8 @@
       <div class="leftNavBar">
         <a href="/"
           ><img
-            src="{% static 'assets/hultPrizeLogoNew.png' %}"
+            src="{% static 'assets/hultprizelogonewcropped.png' %}"
             alt="Hult Prize Logo"
-            style="width: 180px; height: auto"
             class="logo-img"
         /></a>
       </div>
@@ -74,7 +73,7 @@
         <a href="/speakers" class="nav-link">Winners & Speakers</a>
 
         {% if user.is_authenticated %}
-        <a href="/quiz" class="nav-link">Quiz</a>
+        <!-- <a href="/quiz" class="nav-link">Quiz</a> -->
         <a href="/team" class="nav-link">Team</a>
         <a href="javascript: document.logoutForm.submit()" class="nav-link"
           >Logout</a
@@ -225,8 +224,8 @@
             713209
           </p>
           <p class="footer-text">
-            <i class="fa-solid fa-phone"></i> +91 72598 68646 (Kshitiz)<br />
-            <i class="fa-solid fa-phone"></i> +91 93466 83039 (Ekta)
+            <i class="fa-solid fa-phone"></i> +91 91225 83663 (Ritu)<br />
+            <i class="fa-solid fa-phone"></i> +91 74397 79361 (Ayush)
           </p>
           <p class="footer-text">
             <i class="fa-solid fa-envelope"></i> edc@nitdgp.ac.in
@@ -236,7 +235,7 @@
 
       <div class="footer-bottom">
         <p>
-          Made with <i class="fa fa-heart"></i> by EDC Web Team | © 2025 EDC NIT
+          Made with <i class="fa fa-heart"></i> by EDC Web Team | © 2026 EDC NIT
           Durgapur. All Rights Reserved.
         </p>
       </div>

@@ -1,7 +1,9 @@
 let loader = document.getElementById("preloader");
 
 window.addEventListener("load", () => {
-  setTimeout(() => {loader.style.display = "none";}, 1000);
+  setTimeout(() => {
+    loader.style.display = "none";
+  }, 1000);
 });
 
 let navbarResp = document.getElementById("navbar-resp");
@@ -17,12 +19,12 @@ burger.addEventListener("click", () => {
 });
 
 burger.addEventListener("mouseover", () => {
-  line1.style.backgroundColor = "rgb(230, 0, 127)";
-  line2.style.backgroundColor = "rgb(230, 0, 127)";
-  line3.style.backgroundColor = "rgb(230, 0, 127)";
+  line1.style.backgroundColor = "#ec008c";
+  line2.style.backgroundColor = "#ec008c";
+  line3.style.backgroundColor = "#ec008c";
 });
 burger.addEventListener("mouseout", () => {
-  line1.style.backgroundColor = "rgb(50, 50, 50)";
-  line2.style.backgroundColor = "rgb(50, 50, 50)";
-  line3.style.backgroundColor = "rgb(50, 50, 50)";
+  line1.style.backgroundColor = "#ffffff";
+  line2.style.backgroundColor = "#ffffff";
+  line3.style.backgroundColor = "#ffffff";
 });

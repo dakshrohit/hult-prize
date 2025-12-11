@@ -145,13 +145,45 @@ Login{% endblock title %} {% block css %}
     text-decoration: underline;
   }
 
-  @media (max-width: 600px) {
-    .login-card {
-      padding: 35px 25px;
+  @media (max-width: 968px) {
+    .login-container {
+      padding: 100px 2rem 40px;
     }
 
+    .login-card {
+      padding: 40px 30px;
+    }
+
+    .login-card h1 {
+      font-size: 36px;
+    }
+  }
+
+  @media (max-width: 600px) {
     .login-container {
-      padding: 100px 1.5rem 30px;
+      padding: 80px 1rem 30px;
+    }
+
+    .login-card {
+      padding: 30px 20px;
+    }
+
+    .login-card h1 {
+      font-size: 28px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+    }
+
+    .form-control {
+      padding: 14px;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      padding: 14px;
+      font-size: 16px;
     }
   }
 </style>
@@ -225,10 +257,7 @@ Login{% endblock title %} {% block css %}
 <div class="login-container">
   <div class="login-card">
     <div class="login-logo">
-      <img
-        src="{% static 'assets/edcnitd.png' %}"
-        alt="Hult Prize Logo"
-      />
+      <img src="{% static 'assets/edcnewlogo.png' %}" alt="Hult Prize Logo" />
     </div>
     <h1 class="login-title">Welcome Back</h1>
 

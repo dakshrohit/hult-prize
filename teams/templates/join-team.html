@@ -1,33 +1,46 @@
-{% extends 'base.html' %} 
-{% load static %} 
-{% block title %}Hult Prize - View all Teams{% endblock title %}
-{% block css %}
+{% extends 'base.html' %} {% load static %} {% block title %}Hult Prize - View
+all Teams{% endblock title %} {% block css %}
 <style>
-  #preloader{
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  z-index: 100;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  
-}
+  #preloader {
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    z-index: 100;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+  }
 
-.burger {
-  position: absolute;
-  right: 15px;
-}
+  .burger {
+    position: absolute;
+    right: 15px;
+  }
 
-.container {
-  display: flex;
-  height: 70vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-} 
+  .container {
+    display: flex;
+    height: 70vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+  }
+
+  @media (max-width: 968px) {
+    .container {
+      padding: 20px 15px;
+      margin-top: 100px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 15px 10px;
+      margin-top: 20px;
+      height: auto;
+      min-height: 60vh;
+    }
+  }
 </style>
 
 <link
@@ -41,148 +54,166 @@
 rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 /> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+  integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
 <link rel="stylesheet" href="{% static 'css/join-team.css' %}" />
-{% endblock css %}
-
-{% block body %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+{% endblock css %} {% block body %} {% for message in messages %}
+<div
+  class="alert alert-{{ message.tags }} alert-dismissible fade show"
+  role="alert"
+>
   <strong>Message : </strong> {{ message }}
   <button
     type="button"
     class="btn-close"
     data-bs-dismiss="alert"
     aria-label="Close"
-  >
-  </button>
+  ></button>
 </div>
 {% endfor %}
 <!-- preloader -->
 <div id="preloader">
-  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+  <script
+    src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+    type="module"
+  ></script>
 
-    <dotlottie-player src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json" background="transparent" speed="1" style="width: 250px; height: 250px;" loop autoplay></dotlottie-player>
+  <dotlottie-player
+    src="https://lottie.host/8ae3c606-6f7b-4e53-ab1a-4b7a7b1beed6/eVbvolOi7R.json"
+    background="transparent"
+    speed="1"
+    style="width: 250px; height: 250px"
+    loop
+    autoplay
+  ></dotlottie-player>
 </div>
 
-{% comment %} Registration closed {% endcomment %}
-{% with registration_closed="true" %} 
-{% comment %}  {% endcomment %}
+{% comment %} Registration closed {% endcomment %} {% with
+registration_closed="true" %} {% comment %} {% endcomment %}
 <div class="container">
-    <div class="button createBtn">
-      {% comment %} Registration closed {% endcomment %}
-        <a href="/create-team" title="Registration is now closed">
-            Create Team
-        </a>
-        {% comment %}  {% endcomment %}
-        <a href="/my-team">
-          My Team
-        </a>
-    </div>
+  <div class="button createBtn">
+    {% comment %} Registration closed {% endcomment %}
+    <a href="/create-team" title="Registration is now closed"> Create Team </a>
+    {% comment %} {% endcomment %}
+    <a href="/my-team"> My Team </a>
+  </div>
 
-    <div class="accordion container-accordion my-3" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button
-            class="accordion-button collapsed"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapse"
-            aria-expanded="true"
-            aria-controls="collapseOne"
-          >
-          Instructions
-          </button>
-        </h2>
-        <div
-          id="collapse{{ index }}{{ forloop.counter0 }}"
-          class="accordion-collapse collapse"
-          aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample"
+  <div class="accordion container-accordion my-3" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapse"
+          aria-expanded="true"
+          aria-controls="collapseOne"
         >
-          <div class="accordion-body">
-            <br>
-            Step 1 : You can either create a new team or join an existing team.
-            <br><br>
-            Step 2 : Joining a team sends an email request to the team leader for approval. Once approved, you will be added to the team
-            <br><br>
-            Step 3 : To create a new team navigate to the form and fill the deatils of your team members which will send an email to them for approval. Once approved, they will be added to your team
-            <br><br>
-          </div>
+          Instructions
+        </button>
+      </h2>
+      <div
+        id="collapse{{ index }}{{ forloop.counter0 }}"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingOne"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <br />
+          Step 1 : You can either create a new team or join an existing team.
+          <br /><br />
+          Step 2 : Joining a team sends an email request to the team leader for
+          approval. Once approved, you will be added to the team
+          <br /><br />
+          Step 3 : To create a new team navigate to the form and fill the
+          deatils of your team members which will send an email to them for
+          approval. Once approved, they will be added to your team
+          <br /><br />
         </div>
       </div>
+    </div>
   </div>
-    
-    {% if data|length == 0 %}
-    <div class="my-5">
-      <h2>No teams have been formed yet. Create your own team to get started</h2>
-    </div>
-    {% else %}
-    <div class="flex">
-        {% for team in data %}
-        <div class="card">
-        <div class="title">
-            <div class="badge badge-leader">
-                <p>{{team.team_name}}</p>
-            </div>
-            {% comment %} Registration closed {% endcomment %}
-            {% if registration_closed == "true" %}
-            {% comment %}  {% endcomment %}
-            {% elif team.no_of_members == 3 %}
-            {% comment %} <form action="/join-team" method="POST" class="button">
-                {% csrf_token %}
-                <input value="{{ team.auth_token }}" name="auth_token" hidden>
-                <button type="submit" disabled title="Maximum 4 members can join a team">
-                    Join Team
-                </button>
-            </form> {% endcomment %}
-            {% elif team.is_leader != True and team.can_request == True %}
-            <form action="/join-team" method="POST" class="button">
-                {% csrf_token %}
-                <input value="{{ team.auth_token }}" name="auth_token" hidden>
-                <button type="submit">
-                    Join Team
-                </button>
-            </form>
-            {% elif team.is_leader != True and team.can_request == False %}
-            <form action="/join-team" method="POST" class="button">
-              {% csrf_token %}
-              <input value="{{ team.auth_token }}" name="auth_token" hidden>
-              <button type="submit" disabled title="Request can only be sent once in 24 hours">
-                  Join Team
-              </button>
-            </form>
-            {% else %}
-            <form action="/join-team" method="POST" class="button">
-              {% csrf_token %}
-              <input value="{{ team.auth_token }}" name="auth_token" hidden>
-              <button type="submit" disabled title="Delete all members from your team before sending request to other teams">
-                  Join Team
-              </button>
-          </form>
-            {% endif %}
+
+  {% if data|length == 0 %}
+  <div class="my-5">
+    <h2>No teams have been formed yet. Create your own team to get started</h2>
+  </div>
+  {% else %}
+  <div class="flex">
+    {% for team in data %}
+    <div class="card">
+      <div class="title">
+        <div class="badge badge-leader">
+          <p>{{team.team_name}}</p>
         </div>
-            <div class="leader">
-                <h5 class="leader-name">{{team.leader}}</h5>
-                <i class="fa-solid fa-crown"></i>
-            </div>
-            <div class="teamMembers">
-                {% for t in team.team_member %}
-                <p class="name">{{ t.first_name }} {{ t.last_name }}</p>
-                {% endfor %}
-            </div>
-        </div>
+        {% comment %} Registration closed {% endcomment %} {% if
+        registration_closed == "true" %} {% comment %} {% endcomment %} {% elif
+        team.no_of_members == 3 %} {% comment %}
+        <form action="/join-team" method="POST" class="button">
+          {% csrf_token %}
+          <input value="{{ team.auth_token }}" name="auth_token" hidden />
+          <button
+            type="submit"
+            disabled
+            title="Maximum 4 members can join a team"
+          >
+            Join Team
+          </button>
+        </form>
+        {% endcomment %} {% elif team.is_leader != True and team.can_request ==
+        True %}
+        <form action="/join-team" method="POST" class="button">
+          {% csrf_token %}
+          <input value="{{ team.auth_token }}" name="auth_token" hidden />
+          <button type="submit">Join Team</button>
+        </form>
+        {% elif team.is_leader != True and team.can_request == False %}
+        <form action="/join-team" method="POST" class="button">
+          {% csrf_token %}
+          <input value="{{ team.auth_token }}" name="auth_token" hidden />
+          <button
+            type="submit"
+            disabled
+            title="Request can only be sent once in 24 hours"
+          >
+            Join Team
+          </button>
+        </form>
+        {% else %}
+        <form action="/join-team" method="POST" class="button">
+          {% csrf_token %}
+          <input value="{{ team.auth_token }}" name="auth_token" hidden />
+          <button
+            type="submit"
+            disabled
+            title="Delete all members from your team before sending request to other teams"
+          >
+            Join Team
+          </button>
+        </form>
+        {% endif %}
+      </div>
+      <div class="leader">
+        <h5 class="leader-name">{{team.leader}}</h5>
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div class="teamMembers">
+        {% for t in team.team_member %}
+        <p class="name">{{ t.first_name }} {{ t.last_name }}</p>
         {% endfor %}
+      </div>
     </div>
-    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
 </div>
-{% comment %} Registration closed {% endcomment %}
-{% endwith %}
-{% comment %}  {% endcomment %}
-
-{% endblock body %}
-
-{% block script %}
+{% comment %} Registration closed {% endcomment %} {% endwith %} {% comment %}
+{% endcomment %} {% endblock body %} {% block script %}
 <script
   src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
   integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
