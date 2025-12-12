@@ -75,7 +75,7 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
   /* Hero Section */
   .page-header {
     background: linear-gradient(135deg, #1d1563 0%, #0d0b3d 100%);
-    padding: 100px 2rem 80px;
+    padding: 60px 2rem 60px;
     text-align: center;
     color: var(--white);
     position: relative;
@@ -121,8 +121,10 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
   /* Content Wrapper */
   .content-wrapper {
     max-width: 1400px;
-    margin: -50px auto 100px;
+    margin: 0 auto 100px;
     padding: 0 2rem;
+    position: relative;
+    z-index: 2;
   }
 
   /* Section Cards */
@@ -143,7 +145,7 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
     font-size: 48px;
     font-weight: 900;
     color: var(--black);
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     text-align: center;
     letter-spacing: -1px;
   }
@@ -223,26 +225,6 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
     overflow: hidden;
     transition: all 0.4s ease;
     box-shadow: 0 10px 30px rgba(29, 21, 99, 0.3);
-  }
-
-  .timeline-card::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .timeline-card:hover::before {
-    opacity: 1;
   }
 
   .timeline-card:hover {
@@ -411,8 +393,17 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
   }
 
   @media (max-width: 600px) {
+    .gradient-banner {
+      padding: 10px 0;
+      margin-top: 65px;
+    }
+
+    .gradient-banner a {
+      font-size: 13px;
+    }
+
     .page-header {
-      padding: 120px 1.5rem 60px;
+      padding: 40px 1.5rem 50px;
     }
 
     .page-header h1 {
@@ -435,11 +426,31 @@ Timeline - Hult Prize NITD{% endblock title %} {% block css %}
       font-size: 24px;
     }
   }
+
+  @media (max-width: 480px) {
+    .gradient-banner {
+      padding: 8px 0;
+    }
+
+    .gradient-banner a {
+      font-size: 11px;
+    }
+
+    .page-header {
+      padding: 35px 1rem 45px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+    }
+  }
 </style>
 {% endblock css %} {% block body %}
 <!-- Gradient Banner -->
 <div class="gradient-banner">
-  <a href="https://www.hultprize.org/en/hult-prize-winners/2025/stick-em">Meet Stick 'Em, our 2025 Hult Prize winners</a>
+  <a href="https://www.hultprize.org/en/hult-prize-winners/2025/stick-em"
+    >Meet Stick 'Em, our 2025 Hult Prize winners</a
+  >
 </div>
 
 <!-- Page Header -->

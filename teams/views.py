@@ -363,63 +363,67 @@ def verify(request, auth_token):
         return redirect('/')
 
 def teamsCSV(request):
-    if request.user.username == 'admin':
-        response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = 'attachment; filename="teams.csv"'
-        writer = csv.writer(response)
-        # Team formed
-        writer.writerow(
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    
+    if not request.user.is_staff and not request.user.is_superuser:
+        messages.error(request, "You don't have permission to access this page.")
+        return redirect('/')
+    
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="teams.csv"'
+    writer = csv.writer(response)
+    # Team formed
+    writer.writerow(
+            [
+                "Team name",
+                "Team Members",
+                "Email",
+                "Phone No."
+            ]
+        )
+    for team in Team.objects.all():
+        if TeamMember.objects.filter(team=team).all().count() != 0:
+            writer.writerow(
                 [
-                    "Team name",
-                    "Team Members",
-                    "Email",
-                    "Phone No."
+                    team.team_name,
+                    team.user.first_name + " " + team.user.last_name + " " + "(Leader)",
+                    team.user.email,
+                    team.leader_phone_no
                 ]
             )
-        for team in Team.objects.all():
-            if TeamMember.objects.filter(team=team).all().count() != 0:
+            team_members = TeamMember.objects.filter(team=team).all()
+            for team_member in team_members:
                 writer.writerow(
                     [
                         team.team_name,
-                        team.user.first_name + " " + team.user.last_name + " " + "(Leader)",
-                        team.user.email,
-                        team.leader_phone_no
+                        team_member.first_name + " " + team_member.last_name,
+                        team_member.email,
+                        team_member.phone_no
                     ]
                 )
-                team_members = TeamMember.objects.filter(team=team).all()
-                for team_member in team_members:
-                    writer.writerow(
-                        [
-                            team.team_name,
-                            team_member.first_name + " " + team_member.last_name,
-                            team_member.email,
-                            team_member.phone_no
-                        ]
-                    )
-                writer.writerow([])
-        writer.writerow([])
-        writer.writerow(["Registered but not part of a team"])
-        writer.writerow([])
-        # Team not formed
-        writer.writerow(
+            writer.writerow([])
+    writer.writerow([])
+    writer.writerow(["Registered but not part of a team"])
+    writer.writerow([])
+    # Team not formed
+    writer.writerow(
+            [
+                "Name",
+                "Email",
+                "Phone No."
+            ]
+        )
+    for team in Team.objects.all():
+        if TeamMember.objects.filter(team=team).all().count() == 0 and TeamMember.objects.filter(email=team.user.email).all().count() == 0:
+            writer.writerow(
                 [
-                    "Name",
-                    "Email",
-                    "Phone No."
+                    team.user.first_name + " " + team.user.last_name,
+                    team.user.email,
+                    team.leader_phone_no
                 ]
             )
-        for team in Team.objects.all():
-            if TeamMember.objects.filter(team=team).all().count() == 0 and TeamMember.objects.filter(email=team.user.email).all().count() == 0:
-                writer.writerow(
-                    [
-                        team.user.first_name + " " + team.user.last_name,
-                        team.user.email,
-                        team.leader_phone_no
-                    ]
-                )
-        return response
-    else:
-        return redirect('/')
+    return response
 
 def faqs(request):
     faqs = Faq.objects.all()

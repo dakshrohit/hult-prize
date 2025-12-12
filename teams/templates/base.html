@@ -98,11 +98,8 @@
         <a href="/speakers">Winners & Speakers</a>
 
         {% if user.is_authenticated %}
-        <a href="/quiz">Quiz</a>
         <a href="/team">Team</a>
-        <a href="javascript: document.logoutForm.submit()" type="submit"
-          >Logout</a
-        >
+        <a href="javascript: document.logoutForm.submit()">Logout</a>
         {% else %}
         <a href="/login">Login</a>
         <a href="/signup">Register</a>
